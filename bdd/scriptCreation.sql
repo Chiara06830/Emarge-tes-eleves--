@@ -31,7 +31,6 @@ DROP TABLE IF EXISTS `sauvegardeTesEleves`.`UE` ;
 CREATE TABLE IF NOT EXISTS `sauvegardeTesEleves`.`UE` (
   `idUE` INT NOT NULL AUTO_INCREMENT,
   `nomUE` VARCHAR(45) NOT NULL,
-  `unEnseignant` INT NULL,
   PRIMARY KEY (`idUE`))
 ENGINE = InnoDB;
 
@@ -68,7 +67,6 @@ DROP TABLE IF EXISTS `sauvegardeTesEleves`.`FILIERE` ;
 CREATE TABLE IF NOT EXISTS `sauvegardeTesEleves`.`FILIERE` (
   `idFiliere` INT NOT NULL AUTO_INCREMENT,
   `nomFiliere` VARCHAR(45) NOT NULL,
-  `uneUE` INT NULL,
   PRIMARY KEY (`idFiliere`))
 ENGINE = InnoDB;
 
@@ -105,7 +103,14 @@ DROP TABLE IF EXISTS `sauvegardeTesEleves`.`GROUPE` ;
 CREATE TABLE IF NOT EXISTS `sauvegardeTesEleves`.`GROUPE` (
   `idGroupe` INT NOT NULL AUTO_INCREMENT,
   `numGroupe` INT NOT NULL,
-  PRIMARY KEY (`idGroupe`))
+  `uneFiliere` INT NULL,
+  PRIMARY KEY (`idGroupe`),
+  INDEX `fk_GROUPE_FILiERE_idx` (`uneFiliere` ASC),
+  CONSTRAINT `fk_GROUPE_FILiERE`
+    FOREIGN KEY (`uneFiliere`)
+    REFERENCES `sauvegardeTesEleves`.`FILIERE` (`idFiliere`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -120,16 +125,9 @@ CREATE TABLE IF NOT EXISTS `sauvegardeTesEleves`.`ETUDIANT` (
   `prenomEtudiant` VARCHAR(45) NOT NULL,
   `photo` VARCHAR(45) NULL,
   `dateNaissance` DATE NULL,
-  `uneFiliere` INT NULL,
   `unGroupe` INT NULL,
   PRIMARY KEY (`idEtudiant`),
-  INDEX `fk_ETUDIANT_FILIERE_idx` (`uneFiliere` ASC),
   INDEX `fk_ETUDIANT_GROUPE_idx` (`unGroupe` ASC),
-  CONSTRAINT `fk_ETUDIANT_FILIERE`
-    FOREIGN KEY (`uneFiliere`)
-    REFERENCES `sauvegardeTesEleves`.`FILIERE` (`idFiliere`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_ETUDIANT_GROUPE`
     FOREIGN KEY (`unGroupe`)
     REFERENCES `sauvegardeTesEleves`.`GROUPE` (`idGroupe`)
@@ -145,7 +143,6 @@ DROP TABLE IF EXISTS `sauvegardeTesEleves`.`SEANCE` ;
 
 CREATE TABLE IF NOT EXISTS `sauvegardeTesEleves`.`SEANCE` (
   `idSeance` INT NOT NULL AUTO_INCREMENT,
-  `intitule` VARCHAR(45) NOT NULL,
   `dateSeance` DATE NOT NULL,
   `creneau` VARCHAR(45) NOT NULL,
   `type` VARCHAR(45) NOT NULL,
