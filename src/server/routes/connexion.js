@@ -20,12 +20,24 @@ function getConnexion() {
 function deleteConnexion() { connection.end; }
 
 /* GET home page. */
-router.get('/connexion', function(req, res, next) {
+router.get('/', function(req, res, next) {
+    const {identifiant, password} = req.query;
+
     getConnexion();
 
-    connection.query('SELECT 5 AS valeur', function (error, results, fields) {
+    let query = `SELECT enseignant.idEnseignant
+        FROM enseignant
+        WHERE enseignant.adresseMail = "${identifiant}" AND enseignant.motDePasse = "${password}"`;
+
+    connection.query(query, function (error, results, fields) {
         if (error) throw error;
-        console.log('le resultat de la requête est : ', results[0].valeur);
+        if(results.length != 0){
+            let id = results[0].idEnseignant
+            console.log("ID user : " + id);
+            return res.json({
+                data : id
+            });
+        }
     }); 
 
     deleteConnexion();
