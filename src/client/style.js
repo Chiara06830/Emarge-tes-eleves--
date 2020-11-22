@@ -15,5 +15,13 @@ export default {
     lien: {
         fontSize: 20,
         color: 'blue'
-    }
+    },
+    input: {
+        marginTop: 10,
+        height: 40, 
+        borderColor: 'gray', 
+        borderWidth: 1, 
+        marginBottom: 20, 
+        paddingHorizontal: 100
+    },
 }

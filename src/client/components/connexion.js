@@ -42,21 +42,19 @@ class PageConnexion extends Component {
             <View style={theme.container}>
                 <Text style={theme.title}>Connexion</Text>
                 <Text style={theme.texte}>Identifiant :</Text>
-                <TextInput
+                <TextInput style={theme.input} type="text" id="identifiant" required placeholder='identifiant'
                     onChangeText={(text) => this.setIdentifiant(text)}
                     value={this.state.identifiant} 
                 />
-                <Text style={theme.texte}>{"\n\n"}Mot de passe :</Text>
-                <TextInput type="password" id="password" required 
+                <Text style={theme.texte}>Mot de passe :</Text>
+                <TextInput style={theme.input} type="password" id="motDePasse" required placeholder='mot de passe'
                     onChangeText={(text) => this.setMotDePasse(text)}
                     value={this.state.motDePasse}
                 />
-                <Text>{"\n"}</Text>
                 <Text style={theme.lien}
                     onPress={() => this.state.etat('motDePasseOublie')}>
-                    Mot de passe oublié ?
+                    Mot de passe oublié ?{"\n"}
                 </Text>
-                <Text>{"\n"}</Text>
                 <Button onPress={() => this.connexion()} title="Se connecter"/>
                 {this.messageErreur()}
             </View>
