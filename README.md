@@ -30,7 +30,7 @@ Pour l'application coté client :
 
 2. npx react-native start
 
-3.Ouvrer un autre terminal dans le dossier client
+3. Ouvrer un autre terminal dans le dossier client
 
 4. Pour lancer le projet en android : 
 npx react-native run-android

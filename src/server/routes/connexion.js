@@ -19,7 +19,6 @@ function getConnexion() {
 
 function deleteConnexion() { connection.end; }
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
     const {identifiant, password} = req.query;
 

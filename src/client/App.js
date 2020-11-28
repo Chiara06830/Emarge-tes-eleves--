@@ -1,28 +1,33 @@
-import React from 'react'
+import React from 'react';
 import { View } from 'react-native';
-import PageConnexion from './components/connexion'
-import PageErreur from './components/erreur'
+import PageConnexion from './components/connexion';
+import Onglet from './components/tab';
+import PageErreur from './components/erreur';
 
-export default class App extends React.Component {
-
+class Index extends React.Component {
     state = {
         etat: 'connexion'
     }
 
     changeEtat = (valeur) => {
-        this.setState({
-          etat: valeur
-        })
-      }
+      this.setState({
+        etat: valeur
+      })
+    }
 
     render() {
-        const page = this.state.etat === 'connexion' ? <PageConnexion changeEtat={this.changeEtat}/> : 
-        <PageErreur/>
+      const page = this.state.etat === 'connexion' ? <PageConnexion changeEtat={this.changeEtat}/> : 
+      this.state.etat === 'sceance' ? <Onglet /> :
+      <PageErreur/>
 
-        return (
-            <View style={{flex: 1}}>
-              { page }
-            </View>
-        );
+      return (
+          <View style={{flex: 1}}>
+            { page }
+          </View>
+      );
     }
+}
+
+export default function App(){
+  return (<Index/>);
 }
