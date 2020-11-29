@@ -19,12 +19,12 @@ class PageConnexion extends Component {
 
         // changment de page si ok
         //this.state.etat('accueil')
-        fetch(`http://localhost:3000/connexion?identifiant=${this.state.identifiant}&password=${this.state.motDePasse}/`)
+        /*fetch(`http://localhost:3000/connexion?identifiant=${this.state.identifiant}&password=${this.state.motDePasse}/`)
             .then(res => res.json())
             .then(res => console.log(res))
             .catch(err =>{
                 if(err) throw err;
-            });
+            });*/
     }
 
     messageErreur() {

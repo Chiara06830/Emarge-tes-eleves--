@@ -1,16 +1,42 @@
 export default {
     container: {
-        flex: 1,
+        marginTop: 20,
+        flex: 1
+    },
+    container2: {
         justifyContent: "center",
         alignItems: "center",
         margin: 20
+    },
+    container3: {
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    container4: {
+        marginRight: 20,
+        marginLeft: 20
+    },
+    containerViewRow: { 
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
     },
     title: {
         fontSize: 30,
         marginBottom: 20
     },
+    title2: {
+        fontSize: 26,
+        marginBottom: 20
+    },
     texte: {
-        fontSize: 20
+        fontSize: 20,
+        justifyContent: 'flex-start',
+        alignItems: "flex-start"
+    },
+    texte2: {
+        fontSize: 20,
+        justifyContent: 'flex-end',
+        alignItems: "flex-end"
     },
     lien: {
         fontSize: 20,
@@ -24,4 +50,14 @@ export default {
         marginBottom: 20, 
         paddingHorizontal: 100
     },
+    item: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 30,
+        margin: 2,
+        borderColor: '#2a4944',
+        borderWidth: 1,
+        backgroundColor: '#d2f7f1'
+     },
 }
