@@ -1,4 +1,5 @@
 export default {
+    color : '#ffffff',
     container: {
         flex: 1,
         justifyContent: "center",
@@ -24,4 +25,9 @@ export default {
         marginBottom: 20, 
         paddingHorizontal: 100
     },
+    row: {
+        backgroundColor: '#ffffff',
+        padding: 5,
+        margin : 2
+    }
 }

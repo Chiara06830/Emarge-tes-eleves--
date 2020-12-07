@@ -17,7 +17,7 @@ class Index extends React.Component {
 
     render() {
       const page = this.state.etat === 'connexion' ? <PageConnexion changeEtat={this.changeEtat}/> : 
-      this.state.etat === 'sceance' ? <Onglet /> :
+      this.state.etat === 'sceance' ? <Onglet changeEtat={this.changeEtat}/> :
       <PageErreur/>
 
       return (

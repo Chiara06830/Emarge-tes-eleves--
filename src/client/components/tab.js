@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Image, Text} from 'react-native';
+import { View, Image} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import PageCreationUneSeance from './creationSceance'
 import PageHistoriqueDesSeances from './historiqueSceance'
@@ -31,24 +31,26 @@ function Tabs() {
                 backgroundColor: "#FFF"
             },
             style:{
-                backgroundColor: "#a2273C",
+                backgroundColor: "#ffcc00",
                 boderTopWidth: 1,
                 borderColor: "#3f101c"
             }
             }}
         >
-            <Tab.Screen name="Creation" component={PageCreationUneSeance} />
-            <Tab.Screen name="Hitorique" component={PageHistoriqueDesSeances} />
+            <Tab.Screen name="Creation" component={PageCreationUneSeance}/>
+            <Tab.Screen name="Hitorique" component={PageHistoriqueDesSeances}/>
         </Tab.Navigator>
         </NavigationContainer>
     );
 }
 
-export default function Onglet() {
-    return (
+export default class Onglet extends Component{
+    render (){
+        return (
             <View style={{flex: 1}}>
                 <StatusBar hidden={true}/>
-                <Tabs/>
+                <Tabs changeEtat={this.props.changeEtat}/>
             </View>
-    );
+        );
+    }
 }
