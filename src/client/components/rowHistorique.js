@@ -9,7 +9,6 @@ export default class Row extends React.Component{
             id : props.changeId
         }
     }
-    
 
     render(){
         const nom = "" + this.props.title + "-" + this.props.type + "-" + this.props.filiere + " G" + this.props.groupe + "\n"
