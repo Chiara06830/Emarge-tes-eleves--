@@ -2,6 +2,7 @@ import React from 'react';
 import {TouchableOpacity, Text, TextInput, Image} from 'react-native';
 import styles from '../style';
 import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
+import { CheckBox } from 'react-native-elements';
 
 export default class Row extends React.Component{
     constructor(props){
