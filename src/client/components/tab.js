@@ -17,7 +17,7 @@ function Tabs() {
                     tabBarIcon : () => {
                         if(route.name === "Creation")
                             return <Image source={require('./icons/creation.png')} style={{width:20, height:20}} />
-                        else if(route.name === "Hitorique"){
+                        else if(route.name === "Historique"){
                             return <Image source={require('./icons/historique.png')} style={{width:20, height:20}} />
                         }
                     }

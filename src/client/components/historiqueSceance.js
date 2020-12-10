@@ -38,12 +38,25 @@ export default class PageHistoriqueDesSeances extends Component{
     constructor(props){
         super(props);
         this.state = {
-            idSeance : -1
+            idSeance : -1,
+            data : null
         }
     }
 
     changeId = (id) => {
         this.setState({idSeance : id});
+    }
+
+    changeOnglet = (nom) => {
+        this.props.navigation.navigate(nom);
+    }
+
+    componentDidMount(){
+        this.fetchData();
+    }
+
+    fetchData(){ //temporaire
+        this.setState({data: DATA});
     }
 
     render(){
@@ -65,7 +78,7 @@ export default class PageHistoriqueDesSeances extends Component{
                     <Text style={styles.title}>Historique des séances</Text>
                     <SafeAreaView>
                         <FlatList
-                            data={DATA}
+                            data={this.state.data}
                             renderItem={renderItem}
                             keyExtractor={item => item.id}
                         />
@@ -74,7 +87,11 @@ export default class PageHistoriqueDesSeances extends Component{
             );
         }else {
             return (
-                <Appel />
+                <Appel 
+                    id={this.state.idSeance} 
+                    changeId={this.changeId} 
+                    changeOnglet={this.changeOnglet}
+                />
             );
         }
     }

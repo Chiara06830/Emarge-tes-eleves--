@@ -29,5 +29,9 @@ export default {
         backgroundColor: '#ffffff',
         padding: 5,
         margin : 2
+    },
+    textArea: {
+        borderColor: 'gray', 
+        borderWidth: 1
     }
 }
