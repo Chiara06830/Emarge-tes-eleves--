@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 
 function Tabs() {
     return (
-        <NavigationContainer >
+        <NavigationContainer>
         <Tab.Navigator 
             screenOptions={
             ({route}) => ({
@@ -49,7 +49,7 @@ export default class Onglet extends Component{
         return (
             <View style={{flex: 1}}>
                 <StatusBar hidden={true}/>
-                <Tabs changeEtat={this.props.changeEtat}/>
+                <Tabs id={this.props.id}/>
             </View>
         );
     }

@@ -48,6 +48,23 @@ router.get('/login', function(req, res, next) {
     deleteConnexion();
 });
 
+router.get('/historique', function(req, res, next) {
+    const {id} = req.query;
+
+    getConnexion();
+
+    let query = `SELECT SEANCE.idSeance, UE.nomUE, SEANCE.type, FILIERE.nomFiliere, GROUPE.numGroupe AS numGroup, SEANCE.dateSeance, SEANCE.creneau 
+        FROM SEANCE, UE, GROUPE, FILIERE 
+        WHERE SEANCE.unGroupe = GROUPE.idGroupe AND SEANCE.unEnseignant = ${id} GROUP BY SEANCE.idSeance `;
+
+    connection.query(query, function (error, results, fields) {
+        if (error) throw error;
+        return res.json(results);
+    });
+    
+    deleteConnexion();
+});
+
 router.listen(port, () =>{
     console.log(`Server demarrer sur le port ${port}`);
 });

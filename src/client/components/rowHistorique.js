@@ -10,9 +10,17 @@ export default class Row extends React.Component{
         }
     }
 
+    formatDate (input) {
+        var datePart = input.match(/\d+/g),
+        year = datePart[0],
+        month = datePart[1], day = datePart[2];
+      
+        return day+'/'+month+'/'+year;
+      }
+
     render(){
         const nom = "" + this.props.title + "-" + this.props.type + "-" + this.props.filiere + " G" + this.props.groupe + "\n"
-            + this.props.date + "(" + this.props.creneau + ")";
+            + this.formatDate(this.props.date.split("T")[0]) + " (" + this.props.creneau + ")";
         return (
             <TouchableOpacity
                 style={styles.row}

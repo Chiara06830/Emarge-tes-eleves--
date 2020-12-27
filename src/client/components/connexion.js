@@ -23,6 +23,9 @@ class PageConnexion extends Component {
                 // changment de page si ok
                 if(res.data != -1)
                     this.state.etat('sceance');
+                else{
+                    //message erreure connexion
+                }
             })
             .catch(err =>{
                 if(err) throw err;
