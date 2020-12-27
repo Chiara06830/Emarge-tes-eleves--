@@ -6,7 +6,8 @@ import PageErreur from './components/erreur';
 
 class Index extends React.Component {
     state = {
-        etat: 'connexion'
+        etat: 'connexion',
+        id : -2
     }
 
     changeEtat = (valeur) => {
@@ -15,9 +16,15 @@ class Index extends React.Component {
       })
     }
 
+    changeId = (id) => {
+      this.setState({
+        id : id
+      })
+    }
+
     render() {
-      const page = this.state.etat === 'connexion' ? <PageConnexion changeEtat={this.changeEtat}/> : 
-      this.state.etat === 'sceance' ? <Onglet changeEtat={this.changeEtat}/> :
+      const page = this.state.etat === 'connexion' ? <PageConnexion changeEtat={this.changeEtat} changeId={this.changeId}/> : 
+      this.state.etat === 'sceance' ? <Onglet changeEtat={this.changeEtat} id={this.state.id}/> :
       <PageErreur/>
 
       return (

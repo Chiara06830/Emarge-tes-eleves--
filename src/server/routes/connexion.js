@@ -1,12 +1,15 @@
 var express = require('express');
 var mysql = require('mysql');
-var router = express.Router();
+const cors = require('cors');
+var router = express();
+
+const port = 5600;
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: 'motdepasse',
-    database: 'sauvegardeteseleves'
+    user: 'nom_utilisateur_choisi',
+    password: 'mot_de_passe_solide',
+    database: 'zil3-zrelevach'
 });
 
 function getConnexion() {
@@ -19,27 +22,32 @@ function getConnexion() {
 
 function deleteConnexion() { connection.end; }
 
-router.get('/', function(req, res, next) {
+router.use(cors());
+
+router.get('/login', function(req, res, next) {
     const {identifiant, password} = req.query;
 
     getConnexion();
 
-    let query = `SELECT enseignant.idEnseignant
-        FROM enseignant
-        WHERE enseignant.adresseMail = "${identifiant}" AND enseignant.motDePasse = "${password}"`;
+    let query = `SELECT ENSEIGNANT.idEnseignant
+        FROM ENSEIGNANT
+        WHERE ENSEIGNANT.adresseMail = "${identifiant}" AND ENSEIGNANT.motDePasse = "${password}"`;
 
     connection.query(query, function (error, results, fields) {
         if (error) throw error;
+        let id = -1;
         if(results.length != 0){
-            let id = results[0].idEnseignant
+            id = results[0].idEnseignant
             console.log("ID user : " + id);
-            return res.json({
-                data : id
-            });
         }
+        return res.json({
+            data : id
+        });
     }); 
 
     deleteConnexion();
 });
 
-module.exports = router;
+router.listen(port, () =>{
+    console.log(`Server demarrer sur le port ${port}`);
+});

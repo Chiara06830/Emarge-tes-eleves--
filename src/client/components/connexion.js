@@ -10,23 +10,23 @@ class PageConnexion extends Component {
             etat: props.changeEtat,
             identifiant: '',
             motDePasse: '',
-            erreur: 0
+            erreur: 0,
         }
     }
 
     connexion() {
         // back verif connexion
-
-        // changment de page si ok
-        this.state.etat('sceance');
-        /*fetch(`http://localhost:3000/connexion?identifiant=${this.state.identifiant}&password=${this.state.motDePasse}`)
+        fetch(`http://localhost:5600/login?identifiant=${this.state.identifiant}&password=${this.state.motDePasse}`)
             .then(res => res.json())
             .then(res => {
-                console.log(res)
+                this.props.changeId(res.data);
+                // changment de page si ok
+                if(res.data != -1)
+                    this.state.etat('sceance');
             })
             .catch(err =>{
                 if(err) throw err;
-            });*/
+            });
     }
 
     messageErreur() {
