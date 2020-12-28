@@ -2,6 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 import PageConnexion from './components/connexion';
 import Onglet from './components/tab';
+import MotDePasseOublie from './components/motDePasseOublie';
+import ChangerMotDePasse from './components/changerMotDePasse';
 import PageErreur from './components/erreur';
 
 class Index extends React.Component {
@@ -25,6 +27,8 @@ class Index extends React.Component {
     render() {
       const page = this.state.etat === 'connexion' ? <PageConnexion changeEtat={this.changeEtat} changeId={this.changeId}/> : 
       this.state.etat === 'sceance' ? <Onglet changeEtat={this.changeEtat} id={this.state.id}/> :
+      this.state.etat === 'motDePasseOublie' ? <MotDePasseOublie changeEtat={this.changeEtat}/> :
+      this.state.etat === 'changerMotDePasse' ? <ChangerMotDePasse changeEtat={this.changeEtat}/> : 
       <PageErreur/>
 
       return (
