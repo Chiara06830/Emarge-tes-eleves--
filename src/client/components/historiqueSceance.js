@@ -26,7 +26,7 @@ export default class PageHistoriqueDesSeances extends Component{
     }
 
     fetchData(){ //temporaire
-        fetch(`http://localhost:5600/historique?id=3`)
+        fetch(`http://localhost:5600/historique?id=1`)
             .then(res => res.json())
             .then(res => {
                 this.setState({data: res});
