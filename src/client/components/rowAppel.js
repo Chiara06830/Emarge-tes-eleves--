@@ -21,6 +21,7 @@ export default class Row extends React.Component{
     }
 
     render(){
+        const photo = this.props.photo == null ? 'profil.PNG' : this.props.photo;
         return (
             <TouchableOpacity
                 style={styles.row}
@@ -36,7 +37,7 @@ export default class Row extends React.Component{
                     }}
                 >
                     <DialogContent>
-                        <Image source={require('./img/' + this.props.photo)} style={{width:60, height:60}} />
+                        <Image source={require('./img/' + photo)} style={{width:60, height:60}} />
                         <Text>{this.props.nom}</Text>
                         <Text>{this.props.prenom}</Text>
                         <TextInput style={styles.textArea} type="text" placeholder='Commentaire'

@@ -16,7 +16,7 @@ export default class Row extends React.Component{
         month = datePart[1], day = datePart[2];
       
         return day+'/'+month+'/'+year;
-      }
+    }
 
     render(){
         const nom = "" + this.props.title + "-" + this.props.type + "-" + this.props.filiere + " G" + this.props.groupe + "\n"
@@ -24,7 +24,7 @@ export default class Row extends React.Component{
         return (
             <TouchableOpacity
                 style={styles.row}
-                onPress={() => this.state.id(this.props.id)}
+                onPress={() => this.props.changeId(this.props.id)}
             >
                 <Text>{nom}</Text>
             </TouchableOpacity>

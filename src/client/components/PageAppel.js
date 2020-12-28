@@ -3,71 +3,70 @@ import {Text, Button, View, SafeAreaView, FlatList} from 'react-native';
 import styles from '../style';
 import Row from './rowAppel';
 
-const DATA =
-{
-    id: 1,
-    nomUE : 'Java Avancé',
-    type :'TD',
-    nomFiliere : 'L3 II',
-    numGroup : 1,
-    dateSeance : '13-07-2020',
-    creneau : '13h-15h',
-    nomEnseignant : "LEMAITRE",
-    prenomEnseignant : "Claude",
-    etudiant : [
-        {id : 1, nom :'Dupond', prenom : 'Jean', presence : 0, photo : 'king.PNG'},
-        {id : 2, nom : 'Duchemin', prenom : 'Marie', presence : 1, photo : 'fille.PNG'},
-        {id : 3, nom : 'Dubois', prenom : 'Bertrand', presence : 1, photo : 'vert.PNG'}
-    ]
-}
-
 export default class PageAppel extends Component{
     constructor(props){
         super(props);
         this.state = {
             data : null,
-            headTable : ['Nom', 'Prénom', 'Présence'],
             dataTable: null
         }
+    }
+
+    formatDate (input) {
+        var datePart = input.match(/\d+/g),
+        year = datePart[0],
+        month = datePart[1], day = datePart[2];
+      
+        return day+'/'+month+'/'+year;
     }
 
     componentDidMount(){
         this.fetchData();
     }
 
-    fetchData(){ //temporaire
-        this.setState({data : DATA});
-        this.setState({dataTable : DATA.etudiant});
+    fetchData(){
+        fetch(`http://localhost:5600/sceance?id=${this.props.id}`)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                this.setState({data: res});
+                this.setState({dataTable : res.etudiant});
+            })
+            .catch(err =>{
+                if(err) throw err;
+            });
     }
 
     valider(){
         this.props.changeId(-1);
         this.props.changeOnglet('Creation');
+        //+ ENVOIE INFO
     }
 
     render(){
+        console.log(this.state.dataTable);
         const renderItem = ({ item }) => (
             <Row 
-                id = {item.id}
-                nom = {item.nom}
-                prenom = {item.prenom}
+                id = {item.idEtudiant}
+                nom = {item.nomEtudiant}
+                prenom = {item.prenomEtudiant}
                 presence = {item.presence}
                 photo = {item.photo}/>
         );
 
-        if(this.state.data != null){
+        if(this.state.data != null && this.state.dataTable != null){
             return (
                 <View >
                     <Text style={styles.title}>UE {this.state.data.nomUE}</Text>
                     <Text>Type de cours : {this.state.data.type}</Text>
                     <Text>Groupe : {this.state.data.nomFiliere} - G{this.state.data.numGroup}</Text>
-                    <Text>Date : {this.state.data.dateSeance}</Text>
+                    <Text>Date : {this.formatDate(this.state.data.dateSeance.split("T")[0])}</Text>
                     <Text>Enseignant : {this.state.data.prenomEnseignant} {this.state.data.nomEnseignant}</Text>
-                        <FlatList
-                            data={this.state.dataTable}
-                            renderItem={renderItem}
-                            keyExtractor={item => item.id}
-                        />
+                    <FlatList
+                        data={this.state.dataTable}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                    />
                     <Button title="Valider" onPress={() => this.valider()}/>
                 </View>
             );
@@ -76,6 +75,5 @@ export default class PageAppel extends Component{
                 <Text>chargement</Text>
             );
         }
-        
     }
 }
