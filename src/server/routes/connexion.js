@@ -7,9 +7,9 @@ const port = 5600;
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root', 
-    password: 'EfDWAnB98rnxyLO5',
-    database: 'sauvegardeTesEleves'
+    user: 'nom_utilisateur_choisi', 
+    password: 'mot_de_passe_solide',
+    database: 'zil3-zrelevach'
 });
 
 function getConnexion() {
@@ -22,7 +22,7 @@ function getConnexion() {
 
 function deleteConnexion() { connection.end; }
 
-router.use(cors());
+router.use(cors()); 
 
 router.get('/login', function(req, res, next) {
     const {identifiant, password} = req.query;
@@ -112,6 +112,39 @@ router.get('/sceance', function(req, res, next) {
             info['etudiant'] = results;
             return res.json(info);
         });
+    }); 
+    
+    deleteConnexion();
+});
+
+router.get('/commentaire', function(req, res, next) {
+    const {idSenace, idEtudiant, commentaire} = req.query;
+
+    getConnexion();
+
+    let query = `UPDATE PARTICIPATION
+        SET PARTICIPATION.commentaire = "${commentaire}"
+        WHERE PARTICIPATION.unEtudiant = ${idEtudiant} AND PARTICIPATION.uneSeance = ${idSenace}`;
+
+    connection.query(query, function (error, results, fields) {
+        if (error) throw error;
+    });
+    
+    deleteConnexion();
+});
+
+router.get('/getCommentaire', function(req, res, next) {
+    const {idSenace, idEtudiant} = req.query;
+
+    getConnexion();
+
+    let query = `SELECT PARTICIPATION.commentaire
+        FROM PARTICIPATION
+        WHERE PARTICIPATION.unEtudiant = ${idEtudiant} AND PARTICIPATION.uneSeance = ${idSenace}`;
+
+    connection.query(query, function (error, results, fields) {
+        if (error) throw error;
+        return res.json(results);
     });
     
     deleteConnexion();

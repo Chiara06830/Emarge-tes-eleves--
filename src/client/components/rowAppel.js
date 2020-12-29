@@ -9,15 +9,38 @@ export default class Row extends React.Component{
         super(props);
         this.state = {
             commentaire : "",
-            visible : false
+            visible : false,
+            checked : false
         }
     }
 
     setCommentaire(text) {this.setState({commentaire : text})}
 
-    fetch() {
+    componentDidMount(){
+        this.getCom();
+    }
+
+    getCom(){
+        fetch(`http://localhost:5600/getCommentaire?idSenace=${this.props.idSeance}&idEtudiant=${this.props.id}`)
+            .then(res => res.json())
+            .then(res => {
+                if(res[0].commentaire != null){
+                    console.log(res[0].commentaire);
+                    this.setState({commentaire : res.commentaire});
+                }  
+            })
+            .catch(err =>{
+                if(err) throw err;
+            });
+    }
+
+    fetchCom() {
         this.setState({ visible: false });
-        //+ ENVOIE DU COMMENTAIRE
+        //envoie commentaire
+        fetch(`http://localhost:5600/commentaire?idSenace=${this.props.idSeance}&idEtudiant=${this.props.id}&commentaire=${this.state.commentaire}`)
+            .catch(err =>{
+                if(err) throw err;
+            });
     }
 
     render(){
@@ -29,7 +52,11 @@ export default class Row extends React.Component{
                     this.setState({ visible: true });
                 }}
             >
-                <Text>{this.props.nom} {this.props.prenom}</Text>
+                <Text>{this.props.nom} {this.props.prenom}
+                <CheckBox
+                    checked={this.state.checked}
+                    onPress={() => this.setState({checked: !this.state.checked})}
+                /></Text>
                 <Dialog
                     visible={this.state.visible}
                     onTouchOutside={() => {
@@ -44,7 +71,7 @@ export default class Row extends React.Component{
                             multiline={true}
                             numberOfLines={4}
                             onChangeText={(text) => this.setCommentaire(text)}
-                            value={this.state.identifiant} 
+                            value={this.state.commentaire} 
                         />
                     </DialogContent>
                     <DialogFooter>
@@ -56,7 +83,7 @@ export default class Row extends React.Component{
                         />
                         <DialogButton
                             text="Valider"
-                            onPress={() => this.fetch()}
+                            onPress={() => this.fetchCom()}
                         />
                     </DialogFooter>
                 </Dialog>

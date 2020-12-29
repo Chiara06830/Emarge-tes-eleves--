@@ -28,7 +28,6 @@ export default class PageAppel extends Component{
         fetch(`http://localhost:5600/sceance?id=${this.props.id}`)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
                 this.setState({data: res});
                 this.setState({dataTable : res.etudiant});
             })
@@ -51,7 +50,8 @@ export default class PageAppel extends Component{
                 nom = {item.nomEtudiant}
                 prenom = {item.prenomEtudiant}
                 presence = {item.presence}
-                photo = {item.photo}/>
+                photo = {item.photo}
+                idSeance={this.props.id}/>
         );
 
         if(this.state.data != null && this.state.dataTable != null){
