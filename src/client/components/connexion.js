@@ -16,7 +16,7 @@ class PageConnexion extends Component {
 
     connexion() {
         // back verif connexion
-        fetch(`http://localhost:5600/login?identifiant=${this.state.identifiant}&password=${this.state.motDePasse}`)
+        fetch(`http://localhost:5600"/login?identifiant=${this.state.identifiant}&password=${this.state.motDePasse}`)
             .then(res => res.json())
             .then(res => {
                 this.props.changeId(res.data);
