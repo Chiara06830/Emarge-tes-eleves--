@@ -5,13 +5,16 @@ var router = express();
 
 const port = 5600;
 
+
+// BDD  : définition
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'user', 
-    password: 'password',
-    database: 'La BDD'
+    user: 'root', 
+    password: 'EfDWAnB98rnxyLO5',
+    database: 'sauvegardeTesEleves'
 });
 
+//BDD : connexion
 function getConnexion() {
     connection.connect(err => {
         if(err) {
@@ -20,10 +23,12 @@ function getConnexion() {
     });
 }
 
+//BDD : fermeture de la connexion
 function deleteConnexion() { connection.end; }
 
 router.use(cors());
 
+// Connexion utilisateur
 router.get('/login', function(req, res, next) {
     const {identifiant, password} = req.query;
 
@@ -48,6 +53,8 @@ router.get('/login', function(req, res, next) {
     deleteConnexion();
 });
 
+
+//Récupération de l'historique
 router.get('/historique', function(req, res, next) {
     const {id} = req.query;
 
@@ -66,6 +73,8 @@ router.get('/historique', function(req, res, next) {
     deleteConnexion();
 });
 
+
+// Récupération de la scéance
 router.get('/sceance', function(req, res, next) {
     const {id} = req.query;
     let info = {
@@ -116,6 +125,58 @@ router.get('/sceance', function(req, res, next) {
     
     deleteConnexion();
 });
+
+//Récupération de l'adressse email 
+
+router.get('/recovery',(req,res) =>{
+    const {email} = req.query;
+
+    getConnexion();
+
+    let query =`SELECT ENSEIGNANT.idEnseignant
+                FROM ENSEIGNANT
+                WHERE adresseMail = "${email}"`;
+
+
+    connection.query(query, function (error, results) {
+        if (error) throw error;
+        let id = -1;
+        if(results.length != 0){
+            id = results[0].idEnseignant
+            console.log("ID user : " + id);
+        }
+        return res.json({
+            data : id
+        });
+    }); 
+
+    deleteConnexion();            
+
+});
+
+//Changement du mot de passe : 
+router.get('/updatePassword', (req,res)=>{
+    const {identifiant, password} = req.query;
+
+    let query = `UPDATE ENSEIGNANT
+                 SET motDePasse = "${password}"
+                 WHERE idEnseignant = "${identifiant}"`;
+
+
+    connection.query(query, function(error, results){
+        var data = true;
+        if(error){
+            data = false;
+            throw error;
+        }
+        return res.json({
+            data : data
+        });
+    });
+    deleteConnexion();
+});
+
+
 
 router.listen(port, () =>{
     console.log(`Server demarrer sur le port ${port}`);

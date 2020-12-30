@@ -16,15 +16,15 @@ class PageConnexion extends Component {
 
     connexion() {
         // back verif connexion
-        fetch(`http://localhost:5600"/login?identifiant=${this.state.identifiant}&password=${this.state.motDePasse}`)
+        fetch(`http://localhost:5600/login?identifiant=${this.state.identifiant}&password=${this.state.motDePasse}`)
             .then(res => res.json())
             .then(res => {
                 this.props.changeId(res.data);
-                // changment de page si ok
+                // changement de page si ok
                 if(res.data != -1)
                     this.state.etat('sceance');
                 else{
-                    //message erreure connexion
+                    alert("L'identifiant/mot de passe est incorrect");
                 }
             })
             .catch(err =>{
