@@ -8,40 +8,43 @@ import PageHistoriqueDesSeances from './historiqueSceance'
 
 const Tab = createBottomTabNavigator();
 
-function Tabs() {
-    return (
-        <NavigationContainer>
-        <Tab.Navigator 
-            screenOptions={
-            ({route}) => ({
-                    tabBarIcon : () => {
-                        if(route.name === "Creation")
-                            return <Image source={require('./icons/creation.png')} style={{width:20, height:20}} />
-                        else if(route.name === "Historique"){
-                            return <Image source={require('./icons/historique.png')} style={{width:20, height:20}} />
+class Tabs extends Component {
+    render () {
+        return (
+            <NavigationContainer>
+            <Tab.Navigator 
+                screenOptions={
+                ({route}) => ({
+                        tabBarIcon : () => {
+                            if(route.name === "Creation")
+                                return <Image source={require('./icons/creation.png')} style={{width:20, height:20}} />
+                            else if(route.name === "Historique"){
+                                return <Image source={require('./icons/historique.png')} style={{width:20, height:20}} />
+                            }
                         }
-                    }
-                })
-            }
-            tabBarOptions={{
-            showIcon: true,
-            showLabel: false,
-            indicatorStyle: {
-                height: 2,
-                backgroundColor: "#FFF"
-            },
-            style:{
-                backgroundColor: "#ffcc00",
-                boderTopWidth: 1,
-                borderColor: "#3f101c"
-            }
-            }}
-        >
-            <Tab.Screen name="Creation" component={PageCreationUneSeance}/>
-            <Tab.Screen name="Hitorique" component={PageHistoriqueDesSeances}/>
-        </Tab.Navigator>
-        </NavigationContainer>
-    );
+                    })
+                }
+                tabBarOptions={{
+                showIcon: true,
+                showLabel: false,
+                indicatorStyle: {
+                    height: 2,
+                    backgroundColor: "#FFF"
+                },
+                style:{
+                    backgroundColor: "#ffcc00",
+                    boderTopWidth: 1,
+                    borderColor: "#3f101c"
+                }
+                }}
+            >
+                <Tab.Screen name="Creation" children={()=><PageCreationUneSeance id={this.props.id}/>}/>
+                <Tab.Screen name="Hitorique" children={()=><PageHistoriqueDesSeances id={this.props.id}/>}/>
+            </Tab.Navigator>
+            </NavigationContainer>
+        );
+    }
+    
 }
 
 export default class Onglet extends Component{
