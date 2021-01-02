@@ -20,10 +20,29 @@ export class ChangerMotDePasse extends Component {
 
     onPress= (e) => {
         if((this.state.nouveauMdp!== '') && (this.state.nouveauMdpConf!== '') && (this.state.nouveauMdp === this.state.nouveauMdpConf)  ){
-            console.log(" IT WORKS ! ");
+            if(this.state.nouveauMdp === this.state.nouveauMdpConf){
+                fetch(`http://localhost:5600/updatePassword?identifiant=${this.props.id}&password=${this.state.nouveauMdp}`)
+                .then(res => res.json())
+                .then(res => {
+                    if(res.data){
+                        this.state.etat('connexion');
+    
+                    }
+                    else{
+                        alert("Erreur : le mot de passe n'a pas été changé");
+    
+                    }
+                    
+                })
+            }
+            else{
+                alert("Les mot de passe entrés ne sont pas les mêmes")
+
+
+            }
         }
         else{
-            console.log("The text fiels are empty !");
+            alert("Veuillez entrer un mot de passe");
 
         }
 

@@ -14,7 +14,36 @@ class MotDePasseOublie extends Component{
     setEmail(email){this.setState({email: email})}
 
     onPress= (e) => {
-        this.state.etat('changerMotDePasse');
+
+        if(this.state.email != ''){
+            console.log("Bonjour ");
+            fetch(`http://localhost:5600/recovery?email=${this.state.email}`)
+            .then( res => res.json())
+            .then( res =>{
+                console.log("Bonjour 2");
+                this.props.changeId(res.data);
+
+                if(res.data != -1){
+                    this.state.etat('changerMotDePasse');
+
+                }
+                else{
+                    alert("Il n'y a pas de compte liée à cette adresse email ");
+
+                }
+
+            })
+            .catch(err =>{
+                if(err) throw err;
+            });
+
+
+            
+        }
+        else{
+            alert("Veuillez entrer une adresse email");
+
+        }
     }
 
     render(){

@@ -20,11 +20,11 @@ class PageConnexion extends Component {
             .then(res => res.json())
             .then(res => {
                 this.props.changeId(res.data);
-                // changment de page si ok
+                // changement de page si ok
                 if(res.data != -1)
                     this.state.etat('sceance');
                 else{
-                    //message erreure connexion
+                    alert("L'identifiant/mot de passe est incorrect");
                 }
             })
             .catch(err =>{
