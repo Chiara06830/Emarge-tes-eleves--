@@ -71,7 +71,7 @@ export default class Row extends React.Component{
                             multiline={true}
                             numberOfLines={4}
                             onChangeText={(text) => this.setCommentaire(text)}
-                            value={this.state.commentaire} 
+                            value={this.state.commentaire}
                         />
                     </DialogContent>
                     <DialogFooter>
