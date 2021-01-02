@@ -38,12 +38,10 @@ export default class PageAppel extends Component{
 
     valider(){
         this.props.changeId(-1);
-        this.props.changeOnglet('Creation');
-        //+ ENVOIE INFO
+        //this.props.changeOnglet('Creation');
     }
 
     render(){
-        console.log(this.state.dataTable);
         const renderItem = ({ item }) => (
             <Row 
                 id = {item.idEtudiant}

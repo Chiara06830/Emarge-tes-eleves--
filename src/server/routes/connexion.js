@@ -126,6 +126,7 @@ router.get('/sceance', function(req, res, next) {
     deleteConnexion();
 });
 
+//mise a jour du commentaire en cas d'absence
 router.get('/commentaire', function(req, res, next) {
     const {idSenace, idEtudiant, commentaire} = req.query;
 
@@ -142,6 +143,7 @@ router.get('/commentaire', function(req, res, next) {
     deleteConnexion();
 });
 
+//afficher le commentaire sauvegarder précédement
 router.get('/getCommentaire', function(req, res, next) {
     const {idSenace, idEtudiant} = req.query;
 
@@ -156,6 +158,41 @@ router.get('/getCommentaire', function(req, res, next) {
         return res.json(results);
     });
     
+    deleteConnexion();
+});
+
+//mise a jour de la présence 
+router.get('/presence', function (req, res, next) {
+    const {idSeance, idEtudiant, valeur} = req.query;
+
+    getConnexion();
+
+    let query = `UPDATE PARTICIPATION
+    SET PARTICIPATION.unTypeParticipation = ${valeur}
+    WHERE PARTICIPATION.unEtudiant = ${idEtudiant} AND PARTICIPATION.uneSeance = ${idSeance}`;
+
+    connection.query(query, function (error, results, fields) {
+        if (error) throw error;
+    });
+
+    deleteConnexion();
+});
+
+//récupération de la présence 
+router.get('/getPresence', function (req, res, next) {
+    const {idSeance, idEtudiant} = req.query;
+
+    getConnexion();
+
+    let query = `SELECT PARTICIPATION.unTypeParticipation
+    FROM PARTICIPATION
+    WHERE PARTICIPATION.unEtudiant = ${idEtudiant} AND PARTICIPATION.uneSeance = ${idSeance}`;
+
+    connection.query(query, function (error, results, fields) {
+        if (error) throw error;
+        return res.json(results);
+    });
+
     deleteConnexion();
 });
 
