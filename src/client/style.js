@@ -71,5 +71,5 @@ export default {
         borderColor: 'gray', 
         borderWidth: 1
     },
-    buttonColor : "##3a3a3a"
+    buttonColor : "#3a3a3a"
 }

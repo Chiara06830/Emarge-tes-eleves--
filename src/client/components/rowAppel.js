@@ -83,6 +83,37 @@ export default class Row extends React.Component{
 
     render(){
         const photo = this.props.photo === null ? 'profil.PNG' : this.props.photo;
+        const radio = this.state.checked ? <View></View> : (
+            <RadioForm
+            formHorizontal={false}
+            animation={true}
+            >{
+                this.radio_props.map((obj, i) => (
+                <RadioButton labelHorizontal={true} key={i} accessible={false}>
+                    <RadioButtonInput
+                        obj={obj}
+                        index={i}
+                        isSelected={this.state.value === i}
+                        onPress={(value) => this.setState({value:value})}
+                        borderWidth={1}
+                        buttonInnerColor={'#000000'}
+                        buttonOuterColor={this.state.value === i ? '#000000' : '#000'}
+                        buttonSize={10}
+                        buttonOuterSize={20}
+                        buttonWrapStyle={{marginLeft: 10}}
+                    />
+                    <RadioButtonLabel
+                        obj={obj}
+                        index={i}
+                        labelHorizontal={false}
+                        onPress={(value) => this.setState({value:value})}
+                        labelStyle={{fontSize: 20, color: '#000000'}}
+                    />
+                </RadioButton>
+                ))
+            }
+        </RadioForm>
+        );
         return (
             <TouchableOpacity
                 style={styles.row}
@@ -121,35 +152,7 @@ export default class Row extends React.Component{
                             checked={this.state.checked}
                             onPress={() => this.setState({checked: !this.state.checked})}
                         />
-                        <RadioForm
-                            formHorizontal={false}
-                            animation={true}
-                            >{
-                                this.radio_props.map((obj, i) => (
-                                <RadioButton labelHorizontal={true} key={i} accessible={false}>
-                                    <RadioButtonInput
-                                        obj={obj}
-                                        index={i}
-                                        isSelected={this.state.value === i}
-                                        onPress={(value) => this.setState({value:value})}
-                                        borderWidth={1}
-                                        buttonInnerColor={'#000000'}
-                                        buttonOuterColor={this.state.value === i ? '#000000' : '#000'}
-                                        buttonSize={10}
-                                        buttonOuterSize={20}
-                                        buttonWrapStyle={{marginLeft: 10}}
-                                    />
-                                    <RadioButtonLabel
-                                        obj={obj}
-                                        index={i}
-                                        labelHorizontal={false}
-                                        onPress={(value) => this.setState({value:value})}
-                                        labelStyle={{fontSize: 20, color: '#000000'}}
-                                    />
-                                </RadioButton>
-                                ))
-                            }
-                        </RadioForm>
+                        {radio}
                         <TextInput style={styles.textArea} type="text" placeholder='Commentaire'
                             multiline={true}
                             numberOfLines={4}
