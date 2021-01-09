@@ -26,7 +26,7 @@ export default class Row extends React.Component{
                 style={styles.row}
                 onPress={() => this.props.changeId(this.props.id)}
             >
-                <Text>{nom}</Text>
+                <Text style={{fontSize: 20}}>{nom}</Text>
             </TouchableOpacity>
         );
     }

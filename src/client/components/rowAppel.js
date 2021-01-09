@@ -4,20 +4,21 @@ import styles from '../style';
 import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
 import { CheckBox } from 'react-native-elements';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import { View } from 'react-native';
 
 export default class Row extends React.Component{
     constructor(props){
         super(props);
         this.radio_props = [
-            {label: 'Abscent', value: 2 },
-            {label: 'Abscence justifié', value: 3 },
-            {label: 'Covid', value:4}
+            {label: 'Abscent', value: 0 },
+            {label: 'Abscence justifié', value: 1 },
+            {label: 'Covid', value:2}
         ];
         this.state = {
-            commentaire : "",
+            commentaire : "prout",
             visible : false,
             checked : false,
-            value: 2
+            value: 0
         }
     }
 
@@ -36,7 +37,6 @@ export default class Row extends React.Component{
             .then(res => res.json())
             .then(res => {
                 if(res[0].commentaire != null){
-                    console.log(res[0].commentaire);
                     this.setState({commentaire : res.commentaire});
                 }  
             })
@@ -47,10 +47,13 @@ export default class Row extends React.Component{
 
     fetchCom() {
         this.setState({ visible: false });
-        fetch(`http://localhost:5600/commentaire?idSenace=${this.props.idSeance}&idEtudiant=${this.props.id}&commentaire=${this.state.commentaire}`)
-            .catch(err =>{
-                if(err) throw err;
-            });
+        if(this.state.commentaire != undefined){
+            fetch(`http://localhost:5600/commentaire?idSenace=${this.props.idSeance}&idEtudiant=${this.props.id}&commentaire=${this.state.commentaire}`)
+                .catch(err =>{
+                    if(err) throw err;
+                });
+        }
+        
     }
 
     //Gestion des presence
@@ -59,7 +62,10 @@ export default class Row extends React.Component{
             .then(res => res.json())
             .then(res => {
                 if(res[0].unTypeParticipation === 1) this.setState({checked : true});
-                else this.setState({checked : false});
+                else {
+                    this.setState({checked : false});
+                    this.setState({value : res[0].unTypeParticipation-2});
+                }
             })
             .catch(err =>{
                 if(err) throw err;
@@ -67,8 +73,8 @@ export default class Row extends React.Component{
     }
 
     fetchPresence() {
-        let val = this.state.checked ? this.state.value : 1;
-        console.log(val);
+        let val = !this.state.checked ? (this.state.value + 2) : 1;
+        console.log(this.state.checked + "-" + val);
         fetch(`http://localhost:5600/presence?idSeance=${this.props.idSeance}&idEtudiant=${this.props.id}&valeur=${val}`)
             .catch(err =>{
                 if(err) throw err;
@@ -84,11 +90,16 @@ export default class Row extends React.Component{
                     this.setState({ visible: true });
                 }}
             >
-                <Text>{this.props.nom} {this.props.prenom}
-                <CheckBox
-                    checked={this.state.checked}
-                    onPress={() => this.fetchPresence()}
-                /></Text>
+                <View style={styles.containerViewRow}>
+                    <Text style={{fontSize: 20}}>{this.props.nom} {this.props.prenom}</Text>
+                    <CheckBox
+                        checkedColor='black'
+                        checked={this.state.checked}
+                        onPress={() => {this.setState(({checked : !this.state.checked}), () => this.fetchPresence());}}
+                    />
+                </View>
+                
+                {/* PopUp */}
                 <Dialog
                     visible={this.state.visible}
                     onTouchOutside={() => {
@@ -96,22 +107,49 @@ export default class Row extends React.Component{
                     }}
                 >
                     <DialogContent>
-                        <Image source={require('./img/' + photo)} style={{width:60, height:60}} />
-                        <Text>{this.props.nom}</Text>
-                        <Text>{this.props.prenom}</Text>
+                        <View style={styles.containerViewRow}>
+                            <Image source={require('./img/' + photo)} style={{width:60, height:60}} />
+                            <View>
+                                <Text style={{fontSize: 20}}>{this.props.nom}</Text>
+                                <Text style={{fontSize: 20}}>{this.props.prenom}</Text>
+                            </View>
+                        </View>
+                        
                         <CheckBox
+                            title='Présent'
+                            checkedColor='black'
                             checked={this.state.checked}
-                            onPress={() => {this.setState({checked: !this.state.checked});this.fetchPresence()}}
+                            onPress={() => this.setState({checked: !this.state.checked})}
                         />
                         <RadioForm
-                            radio_props={this.radio_props}
-                            initial={0}
-                            formHorizontal={true}
-                            labelHorizontal={false}
-                            buttonColor={'#2196f3'}
+                            formHorizontal={false}
                             animation={true}
-                            onPress={(value) => {this.setState({value:value}); this.fetchPresence()}}
-                        />
+                            >{
+                                this.radio_props.map((obj, i) => (
+                                <RadioButton labelHorizontal={true} key={i} accessible={false}>
+                                    <RadioButtonInput
+                                        obj={obj}
+                                        index={i}
+                                        isSelected={this.state.value === i}
+                                        onPress={(value) => this.setState({value:value})}
+                                        borderWidth={1}
+                                        buttonInnerColor={'#000000'}
+                                        buttonOuterColor={this.state.value === i ? '#000000' : '#000'}
+                                        buttonSize={10}
+                                        buttonOuterSize={20}
+                                        buttonWrapStyle={{marginLeft: 10}}
+                                    />
+                                    <RadioButtonLabel
+                                        obj={obj}
+                                        index={i}
+                                        labelHorizontal={false}
+                                        onPress={(value) => this.setState({value:value})}
+                                        labelStyle={{fontSize: 20, color: '#000000'}}
+                                    />
+                                </RadioButton>
+                                ))
+                            }
+                        </RadioForm>
                         <TextInput style={styles.textArea} type="text" placeholder='Commentaire'
                             multiline={true}
                             numberOfLines={4}
@@ -128,7 +166,7 @@ export default class Row extends React.Component{
                         />
                         <DialogButton
                             text="Valider"
-                            onPress={() => this.fetchCom()}
+                            onPress={() => {this.fetchCom(); this.fetchPresence();}}
                         />
                     </DialogFooter>
                 </Dialog>

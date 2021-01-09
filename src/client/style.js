@@ -61,8 +61,8 @@ export default {
         borderColor: '#2a4944',
         borderWidth: 1,
         backgroundColor: '#d2f7f1'
-     },
-     row: {
+    },
+    row: {
         backgroundColor: '#ffffff',
         padding: 5,
         margin : 2
@@ -70,5 +70,6 @@ export default {
     textArea: {
         borderColor: 'gray', 
         borderWidth: 1
-    }
+    },
+    buttonColor : "##3a3a3a"
 }

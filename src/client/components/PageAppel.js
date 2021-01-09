@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Text, Button, View, SafeAreaView, FlatList} from 'react-native';
+import {ActivityIndicator, Text, Button, View, FlatList} from 'react-native';
 import styles from '../style';
 import Row from './rowAppel';
 
@@ -16,7 +16,7 @@ export default class PageAppel extends Component{
         var datePart = input.match(/\d+/g),
         year = datePart[0],
         month = datePart[1], day = datePart[2];
-      
+
         return day+'/'+month+'/'+year;
     }
 
@@ -56,21 +56,27 @@ export default class PageAppel extends Component{
             return (
                 <View >
                     <Text style={styles.title}>UE {this.state.data.nomUE}</Text>
-                    <Text>Type de cours : {this.state.data.type}</Text>
-                    <Text>Groupe : {this.state.data.nomFiliere} - G{this.state.data.numGroup}</Text>
-                    <Text>Date : {this.formatDate(this.state.data.dateSeance.split("T")[0])}</Text>
-                    <Text>Enseignant : {this.state.data.prenomEnseignant} {this.state.data.nomEnseignant}</Text>
+                    <View style={styles.containerViewRow}>
+                        <View>
+                            <Text style={{fontSize: 20}}><Text style={{fontWeight: "bold"}}>Type de cours :</Text> {this.state.data.type}</Text>
+                            <Text style={{fontSize: 20}}><Text style={{fontWeight: "bold"}}>Groupe :</Text> {this.state.data.nomFiliere} - G{this.state.data.numGroup}</Text>
+                        </View>
+                        <View>
+                            <Text style={{fontSize: 20}}><Text style={{fontWeight: "bold"}}>Date :</Text> {this.formatDate(this.state.data.dateSeance.split("T")[0])}</Text>
+                            <Text style={{fontSize: 20}}><Text style={{fontWeight: "bold"}}>Enseignant :</Text> {this.state.data.prenomEnseignant} {this.state.data.nomEnseignant}</Text>
+                        </View>
+                    </View>
                     <FlatList
                         data={this.state.dataTable}
                         renderItem={renderItem}
                         keyExtractor={item => item.id}
                     />
-                    <Button title="Valider" onPress={() => this.valider()}/>
+                    <Button color={styles.buttonColor} title="Valider" onPress={() => this.valider()}/>
                 </View>
             );
         }else {
             return(
-                <Text>chargement</Text>
+                <ActivityIndicator size="large" color="#ffcc00"/>
             );
         }
     }
