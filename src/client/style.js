@@ -74,5 +74,6 @@ export default {
     },
     decalerDroite: {
         marginRight: 20
-    }
+    },
+    buttonColor : '#3a3a3a'
 }

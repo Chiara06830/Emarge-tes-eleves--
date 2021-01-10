@@ -8,9 +8,9 @@ const port = 5700;
 // BDD  : définition
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root', 
-    password: 'motdepasse',
-    database: 'sauvegardeteseleves'
+    user: 'nom_utilisateur_choisi', 
+    password: 'mot_de_passe_solide',
+    database: 'zil3-zrelevach'
 });
 
 //BDD : connexion

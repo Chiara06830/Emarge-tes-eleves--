@@ -67,7 +67,7 @@ export default class PageAppel extends Component{
                         </View>
                     </View>
                     <FlatList
-                        data={this.state.dataTable}
+                        data={this.state.dataTable.sort((a, b) => {a.nomEtudiant.localeCompare(b.nomEtudiant); })}
                         renderItem={renderItem}
                         keyExtractor={item => item.id}
                     />

@@ -38,6 +38,7 @@ export default class Row extends React.Component{
                 if(res[0].commentaire != null){
                     console.log("**" + this.props.nom + " - " + res[0].commentaire);
                     this.setState({commentaire : res.commentaire});
+                    console.log("--" + this.props.nom + " - " + this.state.commentaire);
                 }  
             })
             .catch(err =>{
@@ -48,7 +49,7 @@ export default class Row extends React.Component{
     fetchCom() {
         this.setState({ visible: false });
         if(this.state.commentaire != undefined){
-            fetch(`http://localhost:5600/commentaire?idSenace=${this.props.idSeance}&idEtudiant=${this.props.id}&commentaire=${this.state.commentaire}`)
+            fetch(`http://localhost:5700/commentaire?idSenace=${this.props.idSeance}&idEtudiant=${this.props.id}&commentaire=${this.state.commentaire}`)
                 .catch(err =>{
                     if(err) throw err;
                 });
@@ -74,7 +75,7 @@ export default class Row extends React.Component{
 
     fetchPresence() {
         let val = !this.state.checked ? (this.state.value + 2) : 1;
-        fetch(`http://localhost:5600/presence?idSeance=${this.props.idSeance}&idEtudiant=${this.props.id}&valeur=${val}`)
+        fetch(`http://localhost:5700/presence?idSeance=${this.props.idSeance}&idEtudiant=${this.props.id}&valeur=${val}`)
             .catch(err =>{
                 if(err) throw err;
             });
