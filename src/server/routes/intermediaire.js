@@ -131,6 +131,46 @@ router.get('/updatePassword', (req,res)=>{
         .catch(err =>{if(err) throw err;});
 });
 
+//Selection des UE : 
+router.get('/selectionUE', (req,res)=>{
+
+    fetch(`${host}:${portDest}/selectionUE`)
+        .then(res => res.json())    
+        .then(result => {
+            return res.json({
+                data : result.data
+            });
+        })
+        .catch(err =>{if(err) throw err;});
+});
+
+//Selection des Groupe : 
+router.get('/selectionGroupe', (req,res)=> {
+
+    fetch(`${host}:${portDest}/selectionGroupe`)
+        .then(res => res.json())    
+        .then(result => {
+            return res.json({
+                data : result.data
+            });
+        })
+        .catch(err =>{if(err) throw err;});
+});
+
+//Création d'une séance : 
+router.get('/creationSeance', (req,res)=> {
+    const {nomUE, typeDeCours, groupe, date, creneau, id} = req.query; 
+
+    fetch(`http://localhost:5700/creationSeance?nomUE=${nomUE}&typeDeCours=${typeDeCours}&groupe=${groupe}&date=${date}&creneau=${creneau}&id=${id}`)
+        .then(res => res.json())    
+        .then(result => {
+            return res.json({
+                data : result.data
+            });
+        })
+        .catch(err =>{if(err) throw err;});
+});
+
 router.listen(port, () =>{
     console.log(`Server demarrer sur le port ${port}`);
 });

@@ -236,6 +236,8 @@ router.get('/recovery',(req,res) =>{
 router.get('/updatePassword', (req,res)=>{
     const {identifiant, password} = req.query;
 
+    getConnexion();
+
     let query = `UPDATE ENSEIGNANT
         SET motDePasse = "${password}"
         WHERE idEnseignant = "${identifiant}"`;
@@ -254,7 +256,68 @@ router.get('/updatePassword', (req,res)=>{
     deleteConnexion();
 });
 
+//Selection des UE : 
+router.get('/selectionUE', (req,res)=>{
+    getConnexion();
 
+    let query = `SELECT idUE,nomUE FROM UE`;
+
+    connection.query(query, function(error, results) {
+        var data = results;
+        if(error){
+            data = false;
+            throw error;
+        }
+        return res.json({
+            data : data
+        });
+    });
+    deleteConnexion();
+});
+
+//Selection des Groupe : 
+router.get('/selectionGroupe', (req,res)=> {
+    getConnexion();
+
+    let query = `SELECT GROUPE.idGroupe,GROUPE.numGroupe,FILIERE.nomFiliere
+    FROM GROUPE, FILIERE
+    WHERE GROUPE.uneFiliere = FILIERE.idFiliere`;
+
+    connection.query(query, function(error, results) {
+        var data = results;
+        if(error) {
+            data = false;
+            throw error;
+        }
+        return res.json({
+            data : data
+        });
+    });
+    deleteConnexion();
+});
+
+//Création d'une séance : 
+router.get('/creationSeance', (req,res)=> {
+    const {nomUE, typeDeCours, groupe, date, creneau, id} = req.query; 
+
+    getConnexion();
+
+    let query = `INSERT INTO SEANCE 
+    (dateSeance, creneau, type, unEnseignant, uneUE, unGroupe) 
+    VALUES ('${date}', '${creneau}', '${typeDeCours}', '${id}', '${nomUE}', '${groupe}')`;
+
+    connection.query(query, function(error, results) {
+        var data = true;
+        if(error){
+            data = false;
+            throw error;
+        }
+        return res.json({
+            data : data
+        });
+    });
+    deleteConnexion();
+});
 
 router.listen(port, () =>{
     console.log(`Server demarrer sur le port ${port}`);

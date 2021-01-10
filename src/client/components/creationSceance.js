@@ -1,26 +1,97 @@
 import React, { Component } from 'react';
-import { View, Text, Picker } from 'react-native'
-import DatePicker from 'react-native-datepicker'
+import { format } from "date-fns";
+import { View, Text, Button, Picker } from 'react-native'
+import DatePicker from 'react-date-picker'
+import TimePicker from 'react-time-picker'
 import theme from '../style'
-//import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-//import DateFnsUtils from '@date-io/date-fns';
-
-//import DropDownPicker from 'react-native-dropdown-picker';
 
 class PageCreationUneSeance extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            nomUE: 'Java',
+            nomUE: '1',
             typeDeCours: 'TP',
-            groupe: 'L3 II - G1',
-            date:"15/10/2016"
+            groupe: '1',
+            date: new Date(),
+            debut: '10:00',
+            fin: '12:00',
+            listeUEPicker: [],
+            listeGroupePicker: []
         }
     }
 
-    render() {
+    creationSeance() {
+        const creneau = this.state.debut + " - " + this.state.fin;
+        const date2 = Date.parse(this.state.date);
+        const formatDate = format(date2, "yyyy-MM-dd"); 
+        fetch(`http://localhost:5700/creationSeance?nomUE=${this.state.nomUE}&typeDeCours=${this.state.typeDeCours}&groupe=${this.state.groupe}&date=${formatDate}&creneau=${creneau}&id=${this.props.id}`)
+            .then(res => res.json())
+            .then(res => {
+                this.props.changeId(res.data);
+                // changement de page si ok
+                if(res.data != -1)
+                    this.state.etat('sceance');
+                else{
+                    alert("L'identifiant/mot de passe est incorrect");
+                }
+            })
+            .catch(err =>{
+                if(err) throw err;
+            });
+    }
 
+    acquisitionDesUE() {
+        fetch(`http://localhost:5600/selectionUE`)
+            .then(response => response.json())
+            .then(response => { 
+                var listeNomUE = [];
+                var listeIdUE = [];
+                var listeUE = response.data
+
+                var i = 0;
+                while (listeUE.length > i) {
+                    listeIdUE[i] = "" + listeUE[i].idUE;
+                    listeNomUE[i] = "" + listeUE[i].nomUE;
+                    i++;
+                }
+
+                i = 0;
+                let listeUEPicker2 = listeNomUE.map( (s, i) => {
+                    return <Picker.Item key={i} label={s} value={listeIdUE[i++]} />
+                });
+                this.setState({listeUEPicker: listeUEPicker2})
+            })
+            .catch(err => console.error(err))
+    }
+
+    acquisitionDesGroupe() {
+        fetch(`http://localhost:5700/selectionGroupe`)
+            .then(response => response.json())
+            .then(response => { 
+                var listeIdGroupe = [];
+                var listeIntituleGroupe = [];
+                var listeGroupe = response.data;
+
+                var i = 0;
+                while (listeGroupe.length > i) {
+                    listeIdGroupe[i] = "" + listeGroupe[i].idGroupe;
+                    listeIntituleGroupe[i] = listeGroupe[i].nomFiliere + " - G" + listeGroupe[i].numGroupe;
+                    i++;
+                }
+
+                i = 0;
+                let listeGroupePicker2 = listeIntituleGroupe.map( (s, i) => {
+                    return <Picker.Item key={i} label={s} value={listeIdGroupe[i++]} />
+                });
+                this.setState({listeGroupePicker: listeGroupePicker2})
+            })
+            .catch(err => console.error(err))
+    }
+
+    render() {
+        if (this.state.listeUEPicker.length < 1) this.acquisitionDesUE();
+        if (this.state.listeGroupePicker.length < 1) this.acquisitionDesGroupe();
         return(
             <View style={theme.container}>
                 <View style={theme.container3}>
@@ -32,12 +103,9 @@ class PageCreationUneSeance extends Component {
                     <Picker
                         style={{width: '100%'}}
                         selectedValue={this.state.nomUE}
-                        onValueChange={(itemValue) => this.setState({nomUE: itemValue})}
+                        onValueChange={(itemValue) => { this.setState({nomUE: itemValue}); console.log(itemValue) }}
                     >
-                        <Picker.Item label="Java" value="Java"/>
-                        <Picker.Item label="C" value="C"/>
-                        <Picker.Item label="Math" value="Math"/>
-                        <Picker.Item label="Anglais" value="Anglais"/>
+                        {this.state.listeUEPicker}
                     </Picker>
                     <View style={theme.containerViewRow}>
                         <View>
@@ -59,10 +127,11 @@ class PageCreationUneSeance extends Component {
                                 selectedValue={this.state.groupe}
                                 onValueChange={(itemValue) => this.setState({groupe: itemValue})}
                             >
-                                <Picker.Item label="L3 II - G1" value="L3 II - G1"/>
-                                <Picker.Item label="L3 II - G2" value="L3 II - G2"/>
-                                <Picker.Item label="L3 IFA - G1" value="L3 IFA - G1"/>
-                                <Picker.Item label="L3 IFA - G2" value="L3 IFA - G2"/>
+                                {/*<Picker.Item label="L3 II - G1" value="1"/>
+                                <Picker.Item label="L3 II - G2" value="2"/>
+                                <Picker.Item label="L3 IFA - G1" value="3"/>
+                                <Picker.Item label="L3 IFA - G2" value="4"/>*/}
+                                {this.state.listeGroupePicker}
                             </Picker>
                         </View>
                     </View>
@@ -71,13 +140,27 @@ class PageCreationUneSeance extends Component {
                         <View style={theme.containerViewRow}>
                             <Text style={theme.texte2}>Date :   </Text>
                             <DatePicker
-                                mode="date"
-                                placeholder="select date"
-                                format="DD/MM/YYYY"
-                                date={this.state.date}
-                                onDateChange={(date) => {this.setState({date: date})}}
+                                onChange={(date) => {this.setState({date: date})}}
+                                value={this.state.date}
                             />
                         </View>
+                        <View style={theme.containerViewRow}>
+                            <View style={theme.decalerDroite}>
+                                <Text style={theme.texte2}>Heure de début :   </Text>
+                                <TimePicker
+                                    onChange={(debut) => {this.setState({debut: debut})}}
+                                    value={this.state.debut}
+                                />
+                            </View>
+                            <View>
+                                <Text style={theme.texte2}>Heure de fin :   </Text>
+                                <TimePicker
+                                    onChange={(fin) => {this.setState({fin: fin})}}
+                                    value={this.state.fin}
+                                />
+                            </View>
+                        </View>
+                        <Button onPress={() => this.creationSeance()} title="Création"/>
                     </View>
                 </View>
             </View>

@@ -1,6 +1,5 @@
 export default {
     container: {
-        margin : 5,
         marginTop: 20,
         flex: 1,
         justifyContent: "center",
@@ -21,11 +20,11 @@ export default {
     },
     containerViewRow: { 
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
+        marginBottom: 20
     },
     title: {
-        fontSize: 20,
-        fontWeight: "bold",
+        fontSize: 30,
         marginBottom: 20
     },
     title2: {
@@ -34,7 +33,6 @@ export default {
     },
     texte: {
         fontSize: 20,
-        color : 'black',
         justifyContent: 'flex-start',
         alignItems: "flex-start"
     },
@@ -45,10 +43,9 @@ export default {
     },
     lien: {
         fontSize: 20,
-        textDecorationLines : 'underline',
-        marginBottom : 10
+        color: 'blue'
     },
-    input: {backgroundColor: '#ffffff',
+    input: {
         marginTop: 10,
         height: 40, 
         borderColor: 'gray', 
@@ -65,15 +62,17 @@ export default {
         borderColor: '#2a4944',
         borderWidth: 1,
         backgroundColor: '#d2f7f1'
-    },
-    row: {
+     },
+     row: {
         backgroundColor: '#ffffff',
         padding: 5,
         margin : 2
     },
     textArea: {
-        borderColor: 'gray',
+        borderColor: 'gray', 
         borderWidth: 1
     },
-    buttonColor : "#3a3a3a"
+    decalerDroite: {
+        marginRight: 20
+    }
 }
