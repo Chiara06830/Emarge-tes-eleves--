@@ -22,6 +22,7 @@ class Tabs extends Component {
                                 return <Image source={require('./icons/historique.png')} style={{width:20, height:20}} />
                             }
                         }
+<<<<<<< Updated upstream
                     })
                 }
                 tabBarOptions={{
@@ -45,6 +46,30 @@ class Tabs extends Component {
         );
     }
     
+=======
+                    }
+                })
+            }
+            tabBarOptions={{
+            showIcon: true,
+            showLabel: false,
+            indicatorStyle: {
+                height: 2,
+                backgroundColor: "#FFF"
+            },
+            style:{
+                backgroundColor: "#ffcc00",
+                boderTopWidth: 1,
+                borderColor: "#3f101c"
+            }
+            }}
+        >
+            <Tab.Screen name="Creation" component={PageCreationUneSeance}/>
+            <Tab.Screen name="Historique" component={PageHistoriqueDesSeances}/>
+        </Tab.Navigator>
+        </NavigationContainer>
+    );
+>>>>>>> Stashed changes
 }
 
 export default class Onglet extends Component{

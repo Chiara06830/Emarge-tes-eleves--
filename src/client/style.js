@@ -1,5 +1,6 @@
 export default {
     container: {
+        margin : 5,
         marginTop: 20,
         flex: 1,
         justifyContent: "center",
@@ -32,6 +33,7 @@ export default {
     },
     texte: {
         fontSize: 20,
+        color : 'black',
         justifyContent: 'flex-start',
         alignItems: "flex-start"
     },
@@ -42,9 +44,10 @@ export default {
     },
     lien: {
         fontSize: 20,
-        color: 'blue'
+        textDecorationLines : 'underline',
+        marginBottom : 10
     },
-    input: {
+    input: {backgroundColor: '#ffffff',
         marginTop: 10,
         height: 40, 
         borderColor: 'gray', 
@@ -69,7 +72,18 @@ export default {
     },
     textArea: {
         borderColor: 'gray', 
+<<<<<<< Updated upstream
         borderWidth: 1
     },
     buttonColor : "#3a3a3a"
+=======
+        borderWidth: 1,
+        margin: 5
+    },
+    espace: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    color : '#323131'
+>>>>>>> Stashed changes
 }

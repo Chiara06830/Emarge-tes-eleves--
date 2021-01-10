@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, Text, TextInput, Image} from 'react-native';
+import {TouchableOpacity, Text, TextInput, Image, View} from 'react-native';
 import styles from '../style';
 import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
 import { CheckBox } from 'react-native-elements';
@@ -15,10 +15,16 @@ export default class Row extends React.Component{
             {label: 'Covid', value:2}
         ];
         this.state = {
+<<<<<<< Updated upstream
             commentaire : "prout",
             visible : false,
             checked : false,
             value: 0
+=======
+            commentaire : "",
+            visible : false,
+            chacked : false
+>>>>>>> Stashed changes
         }
     }
 
@@ -121,6 +127,7 @@ export default class Row extends React.Component{
                     this.setState({ visible: true });
                 }}
             >
+<<<<<<< Updated upstream
                 <View style={styles.containerViewRow}>
                     <Text style={{fontSize: 20}}>{this.props.nom} {this.props.prenom}</Text>
                     <CheckBox
@@ -131,12 +138,24 @@ export default class Row extends React.Component{
                 </View>
                 
                 {/* PopUp */}
+=======
+                <View style={styles.espace}>
+                    <Text>{this.props.nom}</Text>
+                    <Text>{this.props.prenom}</Text>
+                    <CheckBox
+                        checked={this.state.checked}
+                        onPress={() => this.setState({checked: !this.state.checked})}
+                    />
+                </View>
+                
+>>>>>>> Stashed changes
                 <Dialog
                     visible={this.state.visible}
                     onTouchOutside={() => {
                         this.setState({ visible: false });
                     }}
                 >
+<<<<<<< Updated upstream
                     <DialogContent>
                         <View style={styles.containerViewRow}>
                             <Image source={require('./img/' + photo)} style={{width:60, height:60}} />
@@ -153,6 +172,21 @@ export default class Row extends React.Component{
                             onPress={() => this.setState({checked: !this.state.checked})}
                         />
                         {radio}
+=======
+                    <DialogContent style={styles.container}>
+                        <View style={styles.containerViewRow}>
+                            <Image source={require('./img/' + this.props.photo)} style={{width:60, height:60}} />
+                            <View>
+                                <Text>{this.props.nom}</Text>
+                                <Text>{this.props.prenom}</Text>
+                            </View>
+                        </View>
+                        <CheckBox
+                            title="Présent"
+                            checked={this.state.checked}
+                            onPress={() => this.setState({checked: !this.state.checked})}
+                        />
+>>>>>>> Stashed changes
                         <TextInput style={styles.textArea} type="text" placeholder='Commentaire'
                             multiline={true}
                             numberOfLines={4}

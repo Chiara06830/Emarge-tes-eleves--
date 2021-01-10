@@ -32,7 +32,7 @@ class Index extends React.Component {
       <PageErreur/>
 
       return (
-          <View style={{flex: 1}}>
+          <View style={{flex: 1, backgroundColor: '#f2f2f2'}}>
             { page }
           </View>
       );

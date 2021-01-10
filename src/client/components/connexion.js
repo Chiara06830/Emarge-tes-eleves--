@@ -64,9 +64,9 @@ class PageConnexion extends Component {
                 />
                 <Text style={theme.lien}
                     onPress={() => this.state.etat('motDePasseOublie')}>
-                    Mot de passe oublié ?{"\n"}
+                    Mot de passe oublié ?
                 </Text>
-                <Button onPress={() => this.connexion()} title="Se connecter"/>
+                <Button color={theme.color} onPress={() => this.connexion()} title="Se connecter"/>
                 {this.messageErreur()}
             </View>
         )
