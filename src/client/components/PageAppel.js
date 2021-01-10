@@ -55,16 +55,15 @@ export default class PageAppel extends Component{
         if(this.state.data != null && this.state.dataTable != null){
             return (
                 <View >
-<<<<<<< Updated upstream
                     <Text style={styles.title}>UE {this.state.data.nomUE}</Text>
                     <View style={styles.containerViewRow}>
                         <View>
-                            <Text style={{fontSize: 20}}><Text style={{fontWeight: "bold"}}>Type de cours :</Text> {this.state.data.type}</Text>
-                            <Text style={{fontSize: 20}}><Text style={{fontWeight: "bold"}}>Groupe :</Text> {this.state.data.nomFiliere} - G{this.state.data.numGroup}</Text>
+                            <Text><Text style={{fontWeight: "bold"}}>Type de cours :</Text> {this.state.data.type}</Text>
+                            <Text><Text style={{fontWeight: "bold"}}>Groupe :</Text> {this.state.data.nomFiliere} - G{this.state.data.numGroup}</Text>
                         </View>
                         <View>
-                            <Text style={{fontSize: 20}}><Text style={{fontWeight: "bold"}}>Date :</Text> {this.formatDate(this.state.data.dateSeance.split("T")[0])}</Text>
-                            <Text style={{fontSize: 20}}><Text style={{fontWeight: "bold"}}>Enseignant :</Text> {this.state.data.prenomEnseignant} {this.state.data.nomEnseignant}</Text>
+                            <Text><Text style={{fontWeight: "bold"}}>Date :</Text> {this.formatDate(this.state.data.dateSeance.split("T")[0])}</Text>
+                            <Text><Text style={{fontWeight: "bold"}}>Enseignant :</Text> {this.state.data.prenomEnseignant} {this.state.data.nomEnseignant}</Text>
                         </View>
                     </View>
                     <FlatList
@@ -73,32 +72,6 @@ export default class PageAppel extends Component{
                         keyExtractor={item => item.id}
                     />
                     <Button color={styles.buttonColor} title="Valider" onPress={() => this.valider()}/>
-=======
-                    <View style={styles.container3}>
-                        <Text style={styles.title}>UE {this.state.data.nomUE}</Text>
-                    </View>
-                    <View>
-                        <View style={styles.containerViewRow}>
-                            <View>
-                                <Text style={styles.texte}>Type de cours : {this.state.data.type}</Text>
-                                <Text style={styles.texte}>Date : {this.state.data.dateSeance}</Text>
-                            </View>
-                            <View>
-                                <Text style={styles.texte}>Groupe : {this.state.data.nomFiliere} - G{this.state.data.numGroup}</Text>
-                                <Text style={styles.texte}>Enseignant : {this.state.data.prenomEnseignant} {this.state.data.nomEnseignant}</Text>
-                            </View>
-                        </View>
-                        
-                        
-                        <FlatList
-                            data={this.state.dataTable}
-                            renderItem={renderItem}
-                            keyExtractor={item => item.id}
-                        />
-                        <Button color={styles.color} title="Valider" onPress={() => this.valider()}/>
-                    </View>
-                    
->>>>>>> Stashed changes
                 </View>
             );
         }else {

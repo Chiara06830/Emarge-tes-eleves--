@@ -4,7 +4,6 @@ import styles from '../style';
 import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
 import { CheckBox } from 'react-native-elements';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-import { View } from 'react-native';
 
 export default class Row extends React.Component{
     constructor(props){
@@ -15,16 +14,10 @@ export default class Row extends React.Component{
             {label: 'Covid', value:2}
         ];
         this.state = {
-<<<<<<< Updated upstream
-            commentaire : "prout",
+            commentaire : "plop",
             visible : false,
             checked : false,
             value: 0
-=======
-            commentaire : "",
-            visible : false,
-            chacked : false
->>>>>>> Stashed changes
         }
     }
 
@@ -39,10 +32,11 @@ export default class Row extends React.Component{
 
     //Gestion des commentaire
     getCom(){
-        fetch(`http://localhost:5600/getCommentaire?idSenace=${this.props.idSeance}&idEtudiant=${this.props.id}`)
+        fetch(`http://localhost:5700/getCommentaire?idSenace=${this.props.idSeance}&idEtudiant=${this.props.id}`)
             .then(res => res.json())
             .then(res => {
                 if(res[0].commentaire != null){
+                    console.log("**" + this.props.nom + " - " + res[0].commentaire);
                     this.setState({commentaire : res.commentaire});
                 }  
             })
@@ -64,7 +58,7 @@ export default class Row extends React.Component{
 
     //Gestion des presence
     getPresence(){
-        fetch(`http://localhost:5600/getPresence?idSeance=${this.props.idSeance}&idEtudiant=${this.props.id}`)
+        fetch(`http://localhost:5700/getPresence?idSeance=${this.props.idSeance}&idEtudiant=${this.props.id}`)
             .then(res => res.json())
             .then(res => {
                 if(res[0].unTypeParticipation === 1) this.setState({checked : true});
@@ -80,7 +74,6 @@ export default class Row extends React.Component{
 
     fetchPresence() {
         let val = !this.state.checked ? (this.state.value + 2) : 1;
-        console.log(this.state.checked + "-" + val);
         fetch(`http://localhost:5600/presence?idSeance=${this.props.idSeance}&idEtudiant=${this.props.id}&valeur=${val}`)
             .catch(err =>{
                 if(err) throw err;
@@ -88,6 +81,7 @@ export default class Row extends React.Component{
     }
 
     render(){
+        console.log(this.props.nom + " - " + this.state.commentaire);
         const photo = this.props.photo === null ? 'profil.PNG' : this.props.photo;
         const radio = this.state.checked ? <View></View> : (
             <RadioForm
@@ -127,9 +121,8 @@ export default class Row extends React.Component{
                     this.setState({ visible: true });
                 }}
             >
-<<<<<<< Updated upstream
                 <View style={styles.containerViewRow}>
-                    <Text style={{fontSize: 20}}>{this.props.nom} {this.props.prenom}</Text>
+                    <Text>{this.props.nom} {this.props.prenom}</Text>
                     <CheckBox
                         checkedColor='black'
                         checked={this.state.checked}
@@ -138,30 +131,18 @@ export default class Row extends React.Component{
                 </View>
                 
                 {/* PopUp */}
-=======
-                <View style={styles.espace}>
-                    <Text>{this.props.nom}</Text>
-                    <Text>{this.props.prenom}</Text>
-                    <CheckBox
-                        checked={this.state.checked}
-                        onPress={() => this.setState({checked: !this.state.checked})}
-                    />
-                </View>
-                
->>>>>>> Stashed changes
                 <Dialog
                     visible={this.state.visible}
                     onTouchOutside={() => {
                         this.setState({ visible: false });
                     }}
                 >
-<<<<<<< Updated upstream
                     <DialogContent>
                         <View style={styles.containerViewRow}>
                             <Image source={require('./img/' + photo)} style={{width:60, height:60}} />
                             <View>
-                                <Text style={{fontSize: 20}}>{this.props.nom}</Text>
-                                <Text style={{fontSize: 20}}>{this.props.prenom}</Text>
+                                <Text>{this.props.nom}</Text>
+                                <Text>{this.props.prenom}</Text>
                             </View>
                         </View>
                         
@@ -172,21 +153,6 @@ export default class Row extends React.Component{
                             onPress={() => this.setState({checked: !this.state.checked})}
                         />
                         {radio}
-=======
-                    <DialogContent style={styles.container}>
-                        <View style={styles.containerViewRow}>
-                            <Image source={require('./img/' + this.props.photo)} style={{width:60, height:60}} />
-                            <View>
-                                <Text>{this.props.nom}</Text>
-                                <Text>{this.props.prenom}</Text>
-                            </View>
-                        </View>
-                        <CheckBox
-                            title="Présent"
-                            checked={this.state.checked}
-                            onPress={() => this.setState({checked: !this.state.checked})}
-                        />
->>>>>>> Stashed changes
                         <TextInput style={styles.textArea} type="text" placeholder='Commentaire'
                             multiline={true}
                             numberOfLines={4}

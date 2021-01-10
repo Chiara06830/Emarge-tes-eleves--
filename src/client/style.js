@@ -24,7 +24,8 @@ export default {
         justifyContent: 'space-evenly'
     },
     title: {
-        fontSize: 30,
+        fontSize: 20,
+        fontWeight: "bold",
         marginBottom: 20
     },
     title2: {
@@ -71,19 +72,8 @@ export default {
         margin : 2
     },
     textArea: {
-        borderColor: 'gray', 
-<<<<<<< Updated upstream
+        borderColor: 'gray',
         borderWidth: 1
     },
     buttonColor : "#3a3a3a"
-=======
-        borderWidth: 1,
-        margin: 5
-    },
-    espace: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    color : '#323131'
->>>>>>> Stashed changes
 }

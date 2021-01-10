@@ -57,7 +57,7 @@ export default class PageHistoriqueDesSeances extends Component{
                         <FlatList
                             data={this.state.data}
                             renderItem={renderItem}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.nom}
                         />
                     </SafeAreaView>
                 </View>
