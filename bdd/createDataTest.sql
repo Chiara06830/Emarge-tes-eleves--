@@ -61,12 +61,12 @@ INSERT INTO RELATION_UE_FILIERE (`idRelationUEFiliere`, `uneUE`, `uneFiliere`)
 -- -----------------------------------------------------
 -- Table `zil3-zrelevach`.`GROUPE`
 -- -----------------------------------------------------
+INSERT INTO GROUPE (`idGroupe`, `numGroupe`, `uneFiliere`)
+    VALUES(1, 1, 1);
 INSERT INTO GROUPE (`idGroupe`, `numGroupe`)
-    VALUES(1, 1);
+    VALUES(2, 1, 3);
 INSERT INTO GROUPE (`idGroupe`, `numGroupe`)
-    VALUES(2, 1);
-INSERT INTO GROUPE (`idGroupe`, `numGroupe`)
-    VALUES(3, 2);
+    VALUES(3, 2, 3);
 
 -- -----------------------------------------------------
 -- Table `zil3-zrelevach`.`ETUDIANT`
