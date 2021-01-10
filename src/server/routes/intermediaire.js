@@ -133,8 +133,9 @@ router.get('/updatePassword', (req,res)=>{
 
 //Selection des UE : 
 router.get('/selectionUE', (req,res)=>{
+    const {id} = req.query;
 
-    fetch(`${host}:${portDest}/selectionUE`)
+    fetch(`${host}:${portDest}/selectionUE?id=${id}`)
         .then(res => res.json())    
         .then(result => {
             return res.json({
@@ -146,8 +147,9 @@ router.get('/selectionUE', (req,res)=>{
 
 //Selection des Groupe : 
 router.get('/selectionGroupe', (req,res)=> {
+    const {id} = req.query;
 
-    fetch(`${host}:${portDest}/selectionGroupe`)
+    fetch(`${host}:${portDest}/selectionGroupe?id=${id}`)
         .then(res => res.json())    
         .then(result => {
             return res.json({

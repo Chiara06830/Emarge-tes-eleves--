@@ -42,7 +42,7 @@ class PageCreationUneSeance extends Component {
     }
 
     acquisitionDesUE() {
-        fetch(`http://localhost:5600/selectionUE`)
+        fetch(`http://localhost:5600/selectionUE?id=${this.props.id}`)
             .then(response => response.json())
             .then(response => { 
                 var listeNomUE = [];
@@ -66,7 +66,7 @@ class PageCreationUneSeance extends Component {
     }
 
     acquisitionDesGroupe() {
-        fetch(`http://localhost:5700/selectionGroupe`)
+        fetch(`http://localhost:5700/selectionGroupe?id=${this.props.id}`)
             .then(response => response.json())
             .then(response => { 
                 var listeIdGroupe = [];

@@ -258,9 +258,14 @@ router.get('/updatePassword', (req,res)=>{
 
 //Selection des UE : 
 router.get('/selectionUE', (req,res)=>{
+    const {id} = req.query;
+
     getConnexion();
 
-    let query = `SELECT idUE,nomUE FROM UE`;
+    let query = `SELECT idUE,nomUE 
+        FROM UE, RELATION_UE_ENSEIGNANT
+        WHERE uneUE = idUE
+        AND unEnseignant = ${id}`;
 
     connection.query(query, function(error, results) {
         var data = results;
@@ -277,11 +282,16 @@ router.get('/selectionUE', (req,res)=>{
 
 //Selection des Groupe : 
 router.get('/selectionGroupe', (req,res)=> {
+    const {id} = req.query;
+
     getConnexion();
 
     let query = `SELECT GROUPE.idGroupe,GROUPE.numGroupe,FILIERE.nomFiliere
-    FROM GROUPE, FILIERE
-    WHERE GROUPE.uneFiliere = FILIERE.idFiliere`;
+    FROM GROUPE, FILIERE, RELATION_UE_ENSEIGNANT, RELATION_UE_FILIERE
+    WHERE GROUPE.uneFiliere = FILIERE.idFiliere
+    AND RELATION_UE_ENSEIGNANT.unEnseignant = ${id}
+    AND RELATION_UE_ENSEIGNANT.uneUE = RELATION_UE_FILIERE.uneUE
+    AND RELATION_UE_FILIERE.uneFiliere = FILIERE.idFiliere`;
 
     connection.query(query, function(error, results) {
         var data = results;
