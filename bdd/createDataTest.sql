@@ -1,4 +1,4 @@
-USE `zil3-zrelevach` ;
+USE `sauvegardeteseleves` ;
 
 DELETE FROM RELATION_UE_ENSEIGNANT;
 DELETE FROM RELATION_UE_FILIERE;
@@ -13,7 +13,7 @@ DELETE FROM TYPEPARTICIPATION;
 
 
 -- -----------------------------------------------------
--- Table `zil3-zrelevach`.`ENSEIGNANT`
+-- Table `sauvegardeteseleves`.`ENSEIGNANT`
 -- -----------------------------------------------------
 INSERT INTO ENSEIGNANT (`idEnseignant`, `nomEnseignant`, `prenomEnseignant`, `adresseMail`, `motDePasse`)
     VALUES (1, "Joplin", "Janis", "Janis.Joplin@univ-brest.fr", "summerTime68");
@@ -23,7 +23,7 @@ INSERT INTO ENSEIGNANT (`idEnseignant`, `nomEnseignant`, `prenomEnseignant`, `ad
     VALUES (3, "Hendrix", "Jimmy", "Jimmy.Hendrix@univ-brest.fr", "HeyJoe!");
 
 -- -----------------------------------------------------
--- Table `zil3-zrelevach`.`UE`
+-- Table `sauvegardeteseleves`.`UE`
 -- -----------------------------------------------------
 INSERT INTO UE (`idUE`, `nomUE`)
     VALUES (1, "Anglais");
@@ -31,7 +31,7 @@ INSERT INTO UE (`idUE`, `nomUE`)
     VALUES (2, "Philo");
 
 -- -----------------------------------------------------
--- Table `zil3-zrelevach`.`RELATION_UE_ENSEIGNANT`
+-- Table `sauvegardeteseleves`.`RELATION_UE_ENSEIGNANT`
 -- -----------------------------------------------------
 INSERT INTO RELATION_UE_ENSEIGNANT (`idRelationUEEnseignant`, `unEnseignant`, `uneUE`)
     VALUES (1, 2, 1);
@@ -41,7 +41,7 @@ INSERT INTO RELATION_UE_ENSEIGNANT (`idRelationUEEnseignant`, `unEnseignant`, `u
     VALUES (3, 3, 2);
 
 -- -----------------------------------------------------
--- Table `zil3-zrelevach`.`FILIERE`
+-- Table `sauvegardeteseleves`.`FILIERE`
 -- -----------------------------------------------------
 INSERT INTO FILIERE (`idFiliere`, `nomFiliere`)
     VALUES(1, "L3 Littérature Orientale");
@@ -49,7 +49,7 @@ INSERT INTO FILIERE (`idFiliere`, `nomFiliere`)
     VALUES(2, "M1 Art du spectacle");
 
 -- -----------------------------------------------------
--- Table `zil3-zrelevach`.`RELATION_UE_FILIERE`
+-- Table `sauvegardeteseleves`.`RELATION_UE_FILIERE`
 -- -----------------------------------------------------
 INSERT INTO RELATION_UE_FILIERE (`idRelationUEFiliere`, `uneUE`, `uneFiliere`)
     VALUES (1, 1, 1);
@@ -59,17 +59,17 @@ INSERT INTO RELATION_UE_FILIERE (`idRelationUEFiliere`, `uneUE`, `uneFiliere`)
     VALUES (3, 1, 2);
 
 -- -----------------------------------------------------
--- Table `zil3-zrelevach`.`GROUPE`
+-- Table `sauvegardeteseleves`.`GROUPE`
 -- -----------------------------------------------------
 INSERT INTO GROUPE (`idGroupe`, `numGroupe`, `uneFiliere`)
     VALUES(1, 1, 1);
-INSERT INTO GROUPE (`idGroupe`, `numGroupe`)
-    VALUES(2, 1, 3);
-INSERT INTO GROUPE (`idGroupe`, `numGroupe`)
-    VALUES(3, 2, 3);
+INSERT INTO GROUPE (`idGroupe`, `numGroupe`, `uneFiliere`)
+    VALUES(2, 1, 2);
+INSERT INTO GROUPE (`idGroupe`, `numGroupe`, `uneFiliere`)
+    VALUES(3, 2, 2);
 
 -- -----------------------------------------------------
--- Table `zil3-zrelevach`.`ETUDIANT`
+-- Table `sauvegardeteseleves`.`ETUDIANT`
 -- -----------------------------------------------------
 INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissance`, `unGroupe`)
     VALUES(1, "McCartney", "Paul", DATE("1942-06-18"), 2);
@@ -101,7 +101,7 @@ INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissa
     VALUES(13, "Wright", "Richard", DATE("1943-07-28"), 1);
 
 -- -----------------------------------------------------
--- Table `zil3-zrelevach`.`SEANCE`
+-- Table `sauvegardeteseleves`.`SEANCE`
 -- -----------------------------------------------------
 INSERT INTO SEANCE (`idSeance`, `dateSeance`, `creneau`, `type`, `unEnseignant`, `uneUE`, `unGroupe`)
     VALUES (1, DATE("1969-01-30"), "20:00", "CM", 2, 1, 2);
@@ -113,7 +113,7 @@ INSERT INTO SEANCE (`idSeance`, `dateSeance`, `creneau`, `type`, `unEnseignant`,
     VALUES (4, DATE("1969-08-12"), "20:00", "TP", 1, 2, 3);
 
 -- -----------------------------------------------------
--- Table `zil3-zrelevach`.`TYPEPARTICIPATION`
+-- Table `sauvegardeteseleves`.`TYPEPARTICIPATION`
 -- -----------------------------------------------------
 INSERT INTO TYPEPARTICIPATION (`idType`, `nomType`)
     VALUES (1, "Présent");
@@ -125,7 +125,7 @@ INSERT INTO TYPEPARTICIPATION (`idType`, `nomType`)
     VALUES (4, "Covid");
 
 -- -----------------------------------------------------
--- Table `zil3-zrelevach`.`PARTICIPATION`
+-- Table `sauvegardeteseleves`.`PARTICIPATION`
 -- -----------------------------------------------------
 INSERT INTO PARTICIPATION (`idParticipation`, `commentaire`, `unTypeParticipation`, `unEtudiant`, `uneSeance`)
     VALUES (1, NULL, 1, 1, 1);

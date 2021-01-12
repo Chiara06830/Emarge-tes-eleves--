@@ -8,9 +8,9 @@ const port = 5700;
 // BDD  : définition
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'nom_utilisateur_choisi', 
-    password: 'mot_de_passe_solide',
-    database: 'zil3-zrelevach'
+    user: 'root', 
+    password: 'motdepasse',
+    database: 'sauvegardeteseleves'
 });
 
 //BDD : connexion
@@ -325,6 +325,89 @@ router.get('/creationSeance', (req,res)=> {
         return res.json({
             data : data
         });
+    });
+    deleteConnexion();
+});
+
+//Vérification de non existance de la séance : 
+router.get('/verificationExistanceSeance', (req,res)=> {
+    const {nomUE, typeDeCours, groupe, date, creneau, id} = req.query; 
+
+    getConnexion();
+
+    let query = `SELECT COUNT(*) AS nb
+    FROM SEANCE 
+    WHERE dateSeance = '${date}' AND creneau = '${creneau}' AND type = '${typeDeCours}' AND unEnseignant = ${id} AND uneUE = ${nomUE} AND unGroupe = ${groupe}`;
+    
+    connection.query(query, function(error, results) {
+        var data = results[0].nb;
+        if(error){
+            data = -1;
+            throw error;
+        }
+        return res.json({
+            data : data
+        });
+    });
+    deleteConnexion();
+});
+
+//Retrouver ma séance : 
+router.get('/retrouverMaSeance', (req,res)=> {
+    const {nomUE, typeDeCours, groupe, date, creneau, id} = req.query; 
+
+    getConnexion();
+
+    let query = `SELECT idSeance
+    FROM SEANCE 
+    WHERE dateSeance = '${date}' AND creneau = '${creneau}' AND type = '${typeDeCours}' AND unEnseignant = ${id} AND uneUE = ${nomUE} AND unGroupe = ${groupe}`;
+    
+    connection.query(query, function(error, results) {
+        var data = results[0].idSeance;
+        if(error){
+            data = -1;
+            throw error;
+        }
+        return res.json({
+            data : data
+        });
+    });
+    deleteConnexion();
+});
+
+//Création des participations : 
+router.get('/creationParticipation', (req,res)=> {
+    const {groupe, uneSeance} = req.query; 
+
+    getConnexion();
+
+    let query = `SELECT idEtudiant
+    FROM ETUDIANT 
+    WHERE unGroupe = ${groupe}`;
+    
+    connection.query(query, function(error, results) {
+        var data = results;
+        if(error){
+            data = undefined;
+            throw error;
+        } else {
+            let query2 = `INSERT INTO PARTICIPATION 
+            (commentaire, unTypeParticipation, unEtudiant, uneSeance) VALUES `;
+            let taille = results.length;
+            for (let i = 0; i < taille; i++) {
+                query2 = query2 + `(NULL, '2', '${results[i].idEtudiant}', '${uneSeance}'),`;
+            }
+            connection.query(query2.substring(0, (query2.length-1)), function(error, results) {
+                var data2 = true;
+                if(error){
+                    data2 = false;
+                    throw error;
+                }
+                return res.json({
+                    data : data2
+                });
+            });
+        }
     });
     deleteConnexion();
 });

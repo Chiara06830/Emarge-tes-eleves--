@@ -25,16 +25,10 @@ class PageCreationUneSeance extends Component {
         const creneau = this.state.debut + " - " + this.state.fin;
         const date2 = Date.parse(this.state.date);
         const formatDate = format(date2, "yyyy-MM-dd"); 
-        fetch(`http://localhost:5700/creationSeance?nomUE=${this.state.nomUE}&typeDeCours=${this.state.typeDeCours}&groupe=${this.state.groupe}&date=${formatDate}&creneau=${creneau}&id=${this.props.id}`)
+        fetch(`http://localhost:5600/creationSeance?nomUE=${this.state.nomUE}&typeDeCours=${this.state.typeDeCours}&groupe=${this.state.groupe}&date=${formatDate}&creneau=${creneau}&id=${this.props.id}`)
             .then(res => res.json())
             .then(res => {
-                this.props.changeId(res.data);
-                // changement de page si ok
-                if(res.data != -1)
-                    this.state.etat('sceance');
-                else{
-                    alert("L'identifiant/mot de passe est incorrect");
-                }
+                
             })
             .catch(err =>{
                 if(err) throw err;
@@ -66,7 +60,7 @@ class PageCreationUneSeance extends Component {
     }
 
     acquisitionDesGroupe() {
-        fetch(`http://localhost:5700/selectionGroupe?id=${this.props.id}`)
+        fetch(`http://localhost:5600/selectionGroupe?id=${this.props.id}`)
             .then(response => response.json())
             .then(response => { 
                 var listeIdGroupe = [];

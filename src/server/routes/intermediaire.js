@@ -163,12 +163,35 @@ router.get('/selectionGroupe', (req,res)=> {
 router.get('/creationSeance', (req,res)=> {
     const {nomUE, typeDeCours, groupe, date, creneau, id} = req.query; 
 
-    fetch(`http://localhost:5700/creationSeance?nomUE=${nomUE}&typeDeCours=${typeDeCours}&groupe=${groupe}&date=${date}&creneau=${creneau}&id=${id}`)
-        .then(res => res.json())    
+    // Vérification de non existance
+    fetch(`${host}:${portDest}/verificationExistanceSeance?nomUE=${nomUE}&typeDeCours=${typeDeCours}&groupe=${groupe}&date=${date}&creneau=${creneau}&id=${id}`)
+        .then(result => result.json())    
         .then(result => {
-            return res.json({
-                data : result.data
-            });
+            if (result.data == 0) {
+                // Ajout de la nouvelle séance
+                fetch(`${host}:${portDest}/creationSeance?nomUE=${nomUE}&typeDeCours=${typeDeCours}&groupe=${groupe}&date=${date}&creneau=${creneau}&id=${id}`)
+                    .then(result2 => result2.json())    
+                    .then(result2 => {
+                        // Recuperation de l'id de la seance crée
+                        fetch(`${host}:${portDest}/retrouverMaSeance?nomUE=${nomUE}&typeDeCours=${typeDeCours}&groupe=${groupe}&date=${date}&creneau=${creneau}&id=${id}`)
+                            .then(result3 => result3.json())    
+                            .then(result3 => {
+                                if (result3.data != -1) {
+                                    // Ajout des participations
+                                    fetch(`${host}:${portDest}/creationParticipation?groupe=${groupe}&uneSeance=${result3.data}`)
+                                        .then(result5 => result5.json())    
+                                        .then(result5 => {
+                                            return res.json({
+                                                data : result5
+                                            });
+                                        })
+                                        .catch(err =>{if(err) throw err;});
+                                }
+                            })
+                            .catch(err =>{if(err) throw err;});
+                    })
+                    .catch(err =>{if(err) throw err;});
+            }
         })
         .catch(err =>{if(err) throw err;});
 });
