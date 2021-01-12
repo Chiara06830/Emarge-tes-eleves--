@@ -32,6 +32,7 @@ export default class Row extends React.Component{
             if(err) throw err;
         });
         this.props.setData();
+        this.setState({alert : false});
     }
 
     //---------COMMUNICATION AVEC LE BACK---------//

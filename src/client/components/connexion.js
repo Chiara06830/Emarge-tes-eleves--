@@ -59,6 +59,7 @@ class PageConnexion extends Component {
                 />
                 <Text style={theme.texte}>Mot de passe :</Text>
                 <TextInput style={theme.input} type="password" id="motDePasse" required placeholder='mot de passe'
+                    secureTextEntry={true}
                     onChangeText={(text) => this.setMotDePasse(text)}
                     value={this.state.motDePasse}
                 />
@@ -66,7 +67,7 @@ class PageConnexion extends Component {
                     onPress={() => this.state.etat('motDePasseOublie')}>
                     Mot de passe oublié ?
                 </Text>
-                <Button color={theme.color} onPress={() => this.connexion()} title="Se connecter"/>
+                <Button color={theme.buttonColor} onPress={() => this.connexion()} title="Se connecter"/>
                 {this.messageErreur()}
             </View>
         )
