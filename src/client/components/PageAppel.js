@@ -24,7 +24,7 @@ export default class PageAppel extends Component{
         this.fetchData();
     }
 
-    fetchData(){
+    fetchData = () => {
         fetch(`http://localhost:5600/sceance?id=${this.props.id}`)
             .then(res => res.json())
             .then(res => {
@@ -49,7 +49,8 @@ export default class PageAppel extends Component{
                 prenom = {item.prenomEtudiant}
                 presence = {item.presence}
                 photo = {item.photo}
-                idSeance={this.props.id}/>
+                idSeance={this.props.id}
+                setData  = {this.fetchData}/>
         );
 
         if(this.state.data != null && this.state.dataTable != null){

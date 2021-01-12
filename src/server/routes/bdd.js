@@ -204,6 +204,24 @@ router.get('/getPresence', function (req, res, next) {
     deleteConnexion();
 });
 
+//Supression d'un éléve du groupe
+router.get('/suppression', function(req, res, next){
+    const {idEtudiant, idSeance} = req.query;
+
+    getConnexion();
+
+    let query =`DELETE FROM PARTICIPATION 
+        WHERE PARTICIPATION.unEtudiant = ${idEtudiant} 
+        AND PARTICIPATION.uneSeance = ${idSeance} `
+
+    connection.query(query, function (error, results, fields) {
+        if (error) throw error;
+        return res.json(results);
+    });
+
+    deleteConnexion();
+});
+
 //Récupération de l'adressse email 
 
 router.get('/recovery',(req,res) =>{
