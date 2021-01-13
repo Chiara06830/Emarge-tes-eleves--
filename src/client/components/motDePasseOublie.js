@@ -61,6 +61,7 @@ class MotDePasseOublie extends Component{
                 />
 
                 <Button
+                    color={theme.buttonColor}
                     title="Envoyer un courriel" 
                     onPress={() => this.onPress()} 
                 />

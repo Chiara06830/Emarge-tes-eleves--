@@ -17,11 +17,23 @@ export default class Row extends React.Component{
             commentaire : "plop",
             visible : false,
             checked : false,
+            alert : false,
             value: 0
         }
     }
 
+    //---------FONCTION UTILITAIRE---------//
+
     setCommentaire(text) {this.setState({commentaire : text})}
+
+    supprimerEtudiant(){
+        fetch(`http://localhost:5600/suppression?idEtudiant=${this.props.id}&idSeance=${this.props.idSeance}`)
+        .catch(err =>{
+            if(err) throw err;
+        });
+        this.props.setData();
+        this.setState({alert : false});
+    }
 
     //---------COMMUNICATION AVEC LE BACK---------//
 
@@ -36,9 +48,9 @@ export default class Row extends React.Component{
             .then(res => res.json())
             .then(res => {
                 if(res[0].commentaire != null){
-                    console.log("**" + this.props.nom + " - " + res[0].commentaire);
+                    //console.log("**" + this.props.nom + " - " + res[0].commentaire);
                     this.setState({commentaire : res.commentaire});
-                    console.log("--" + this.props.nom + " - " + this.state.commentaire);
+                    //console.log("--" + this.props.nom + " - " + this.state.commentaire);
                 }  
             })
             .catch(err =>{
@@ -82,7 +94,7 @@ export default class Row extends React.Component{
     }
 
     render(){
-        console.log(this.props.nom + " - " + this.state.commentaire);
+        //console.log(this.props.nom + " - " + this.state.commentaire);
         const photo = this.props.photo === null ? 'profil.PNG' : this.props.photo;
         const radio = this.state.checked ? <View></View> : (
             <RadioForm
@@ -129,7 +141,11 @@ export default class Row extends React.Component{
                         checked={this.state.checked}
                         onPress={() => {this.setState(({checked : !this.state.checked}), () => this.fetchPresence());}}
                     />
-                </View>
+                    <TouchableOpacity
+                        onPress={() => this.setState({alert : true})}>
+                        <Image source={require('./icons/poubelle.png')} style={{width:30, height:30}} />
+                    </TouchableOpacity>
+                    </View>
                 
                 {/* PopUp */}
                 <Dialog
@@ -171,6 +187,29 @@ export default class Row extends React.Component{
                         <DialogButton
                             text="Valider"
                             onPress={() => {this.fetchCom(); this.fetchPresence();}}
+                        />
+                    </DialogFooter>
+                </Dialog>
+
+                <Dialog
+                    visible={this.state.alert}
+                    onTouchOutside={() => {
+                        this.setState({ alert: false });
+                    }}
+                >
+                    <DialogContent>
+                        <Text style={{marginTop: 10}}>Êtes vous sur de vouloir supprimer <Text style={{fontWeight: "bold"}}>{this.props.nom} {this.props.prenom}</Text> de la liste ?</Text>
+                    </DialogContent>
+                    <DialogFooter>
+                        <DialogButton
+                            text="Non"
+                            onPress={() => {
+                                this.setState({ alert: false });
+                            }}
+                        />
+                        <DialogButton
+                            text="Oui"
+                            onPress={() => {this.supprimerEtudiant()}}
                         />
                     </DialogFooter>
                 </Dialog>

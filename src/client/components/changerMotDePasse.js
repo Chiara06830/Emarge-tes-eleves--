@@ -52,9 +52,10 @@ export class ChangerMotDePasse extends Component {
     render() {
         return (
             <View style={theme.container}>
-                <Text>Changer mon de passe</Text>
+                <Text style={theme.title}>Changer mon de passe</Text>
 
                 <TextInput 
+                    secureTextEntry={true}
                     style={theme.input}
                     type='text'
                     placeholder='Nouveau mot de passe'
@@ -65,6 +66,7 @@ export class ChangerMotDePasse extends Component {
                 />
 
                 <TextInput 
+                    secureTextEntry={true}
                     style={theme.input}
                     type='text'
                     placeholder='Confirmer votre nouveau mot de passe'
@@ -75,6 +77,7 @@ export class ChangerMotDePasse extends Component {
                 />
 
                 <Button 
+                    color={theme.buttonColor}
                     title="Valider"
                     onPress={this.onPress}
                 />

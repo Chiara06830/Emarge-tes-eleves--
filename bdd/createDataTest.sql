@@ -73,8 +73,8 @@ INSERT INTO GROUPE (`idGroupe`, `numGroupe`, `uneFiliere`)
 -- -----------------------------------------------------
 INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissance`, `unGroupe`)
     VALUES(1, "McCartney", "Paul", DATE("1942-06-18"), 2);
-INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissance`, `unGroupe`)
-    VALUES(2, "Starr", "Ringo", DATE("1940-07-7"), 2);
+INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissance`, `unGroupe`, `photo`)
+    VALUES(2, "Starr", "Ringo", DATE("1940-07-7"), 2, "ringo-starr-306872-1-402.jpeg");
 INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissance`, `unGroupe`)
     VALUES(3, "Starr", "Ringo", DATE("1940-10-9"), 2);
 INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissance`, `unGroupe`)
@@ -91,8 +91,8 @@ INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissa
 
 INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissance`, `unGroupe`)
     VALUES(9, "Barret", "Syd", DATE("1946-01-6"), 1);
-INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissance`, `unGroupe`)
-    VALUES(10, "Gilmour", "David", DATE("1946-03-06"), 1);
+INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissance`, `unGroupe`, `photo`)
+    VALUES(10, "Gilmour", "David", DATE("1946-03-06"), 1, "gilmour.jpeg");
 INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissance`, `unGroupe`)
     VALUES(11, "Mason", "Nick", DATE("1944-01-27"), 1);
 INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissance`, `unGroupe`)

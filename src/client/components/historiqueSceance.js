@@ -51,7 +51,7 @@ export default class PageHistoriqueDesSeances extends Component{
 
         if(this.state.idSeance<0){
             return (
-                <View> 
+                <View style={styles.container5}> 
                     <Text style={styles.title}>Historique des séances</Text>
                     <SafeAreaView>
                         <FlatList

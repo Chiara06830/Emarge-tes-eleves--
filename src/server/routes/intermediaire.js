@@ -89,6 +89,14 @@ router.get('/presence', function (req, res, next) {
         .catch(err =>{if(err) throw err;});
 });
 
+//Supression d'un éléve du groupe
+router.get('/suppression', function(req, res, next){
+    const {idEtudiant, idSeance} = req.query;
+
+    fetch(`${host}:${portDest}/suppression?idSeance=${idSeance}&idEtudiant=${idEtudiant}`)
+        .catch(err =>{if(err) throw err;});
+});
+
 //----------MOT DE PASSE OUBLIE----------//
 
 //récupération de la présence 
