@@ -61,6 +61,13 @@ export default {
         padding : 5,
         backgroundColor : 'white'
     },
+    input2: {
+        marginTop: 15,
+        height: 40, 
+        borderColor: 'gray', 
+        borderWidth: 1, 
+        paddingHorizontal: 100
+    },
     item: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -84,6 +91,12 @@ export default {
     },
     decalerDroite: {
         marginRight: 20
+    },
+    decalerHaut: {
+        marginTop: 15
+    },
+    popupAjouterUE: {
+        padding: 5
     },
     buttonColor : '#3a3a3a'
 }

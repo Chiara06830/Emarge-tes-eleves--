@@ -430,6 +430,34 @@ router.get('/creationParticipation', (req,res)=> {
     deleteConnexion();
 });
 
+//Création d'une UE : 
+router.get('/creationUE', (req,res)=> {
+    const {nomUE} = req.query; 
+    console.log(nomUE);
+
+    getConnexion();
+
+    /*let query = `INSERT INTO UE 
+    (nomUE) 
+    VALUES ('${nomUE}')`;*/
+    let query = `REPLACE INTO UE
+    SET nomUE = '${nomUE}'`;
+    
+    console.log(query);
+    connection.query(query, function(error, results) {
+        var data = results;
+        console.log(results);
+        if(error){
+            data = false;
+            throw error;
+        }
+        return res.json({
+            data : data
+        });
+    });
+    deleteConnexion();
+});
+
 router.listen(port, () =>{
     console.log(`Server demarrer sur le port ${port}`);
 });

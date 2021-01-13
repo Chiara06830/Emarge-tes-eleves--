@@ -204,6 +204,21 @@ router.get('/creationSeance', (req,res)=> {
         .catch(err =>{if(err) throw err;});
 });
 
+//Creation d'une UE : 
+router.get('/creationUE', (req,res)=> {
+    const {nomUE} = req.query;
+    console.log(nomUE);
+    fetch(`${host}:${portDest}/creationUE?nomUE=${nomUE}`)
+        .then(res => res.json())    
+        .then(result => {
+            console.log(result);
+            return res.json({
+                data : result.data
+            });
+        })
+        .catch(err =>{if(err) throw err;});
+});
+
 router.listen(port, () =>{
     console.log(`Server demarrer sur le port ${port}`);
 });

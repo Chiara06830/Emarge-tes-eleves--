@@ -31,6 +31,7 @@ DROP TABLE IF EXISTS `sauvegardeteseleves`.`UE` ;
 CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`UE` (
   `idUE` INT NOT NULL AUTO_INCREMENT,
   `nomUE` VARCHAR(45) NOT NULL,
+  UNIQUE (nomUE),
   PRIMARY KEY (`idUE`))
 ENGINE = InnoDB;
 

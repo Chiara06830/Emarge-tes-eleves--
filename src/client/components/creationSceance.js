@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Button } from 'react-native-elements';
 import { format } from "date-fns";
-import { View, Text, Button, Picker } from 'react-native'
+import { TouchableOpacity, View, Text, TextInput, Picker, Image } from 'react-native'
+import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
 import DatePicker from 'react-date-picker'
 import TimePicker from 'react-time-picker'
 import theme from '../style'
@@ -17,7 +19,9 @@ class PageCreationUneSeance extends Component {
             debut: '10:00',
             fin: '12:00',
             listeUEPicker: [],
-            listeGroupePicker: []
+            listeGroupePicker: [],
+            menuCreationUE: false,
+            nomNouvelleUE: ''
         }
     }
 
@@ -26,6 +30,18 @@ class PageCreationUneSeance extends Component {
         const date2 = Date.parse(this.state.date);
         const formatDate = format(date2, "yyyy-MM-dd"); 
         fetch(`http://localhost:5600/creationSeance?nomUE=${this.state.nomUE}&typeDeCours=${this.state.typeDeCours}&groupe=${this.state.groupe}&date=${formatDate}&creneau=${creneau}&id=${this.props.id}`)
+            .then(res => res.json())
+            .then(res => {
+                
+            })
+            .catch(err =>{
+                if(err) throw err;
+            });
+    }
+
+    creationUE() {
+        console.log(this.state.nomNouvelleUE);
+        fetch(`http://localhost:5600/creationUE?nomUE=${this.state.nomNouvelleUE}`)
             .then(res => res.json())
             .then(res => {
                 
@@ -94,13 +110,45 @@ class PageCreationUneSeance extends Component {
                 </View>
                 <View style={theme.container4}>
                     <Text style={theme.texte}>Nom de l'UE :</Text>
-                    <Picker
-                        style={{width: '100%'}}
-                        selectedValue={this.state.nomUE}
-                        onValueChange={(itemValue) => { this.setState({nomUE: itemValue}); console.log(itemValue) }}
-                    >
-                        {this.state.listeUEPicker}
-                    </Picker>
+                    <View style={theme.containerViewRow}>
+                        <Picker
+                            style={{width: '80%'}}
+                            selectedValue={this.state.nomUE}
+                            onValueChange={(itemValue) => this.setState({nomUE: itemValue})}
+                        >
+                            {this.state.listeUEPicker}
+                        </Picker>
+                        {/*<Button onPress={() => this.setState({menuCreationUE: !menuCreationUE})} icon={<Icon name="arrow-right" size={15} color="white"/>}/>*/}
+                        <TouchableOpacity onPress={() => this.setState({menuCreationUE: !this.state.menuCreationUE})}>
+                            <Image source={require('./icons/ajout.png')} style={{width:30, height:30}}/>
+                        </TouchableOpacity>
+                        <Dialog style={theme.popupAjouterUE} visible={this.state.menuCreationUE} onTouchOutside={() => { this.setState({ menuCreationUE: false }); }}>
+                            <DialogContent>
+                                <View style={theme.container2}>
+                                    <Text>Création d'une nouvelle UE</Text>
+                                    <TextInput style={theme.input2} type="text" placeholder='Nom de la nouvelle UE'
+                                        onChangeText={(value) => this.setState({nomNouvelleUE: value})}
+                                        value={this.state.nomNouvelleUE}
+                                    />
+                                </View>
+                            </DialogContent>
+                            <DialogFooter>
+                                <DialogButton
+                                    text="Retour"
+                                    onPress={() => {
+                                        this.setState({ menuCreationUE: false });
+                                    }}
+                                />
+                                <DialogButton
+                                    text="Valider"
+                                    onPress= {() => {
+                                        this.setState({ menuCreationUE: false });
+                                        this.creationUE()}
+                                    }
+                                />
+                            </DialogFooter>
+                        </Dialog>
+                    </View>
                     <View style={theme.containerViewRow}>
                         <View>
                             <Text style={theme.texte}>{"\n"}Type de cours :          </Text>
@@ -121,10 +169,6 @@ class PageCreationUneSeance extends Component {
                                 selectedValue={this.state.groupe}
                                 onValueChange={(itemValue) => this.setState({groupe: itemValue})}
                             >
-                                {/*<Picker.Item label="L3 II - G1" value="1"/>
-                                <Picker.Item label="L3 II - G2" value="2"/>
-                                <Picker.Item label="L3 IFA - G1" value="3"/>
-                                <Picker.Item label="L3 IFA - G2" value="4"/>*/}
                                 {this.state.listeGroupePicker}
                             </Picker>
                         </View>
