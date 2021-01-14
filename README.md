@@ -42,13 +42,16 @@ Un enseignant peut :
 	- Consulter la photo d'un élève,
 	- Choisir un type d'absence,
 	- Laisser un commentaire sur la participation;
+	- Ajouter un élève a la liste d'appel,
+	- Supprimer un élève de la liste d'appel;
 - Consulter l'historique des séances.
 
 ## Fonctionnalités à ajouter
 - Exporter les données au format csv;
-- Voir le nombre d'absence de l'étudiant,
+- Voir le nombre d'absences de l'étudiant,
 	- Changer la couleur de l'étudiant, dans la liste d'appel, en fonction de son nombre d'absence;
-- Enregistrer le nombre d'abscence non justifié,
+- Enregistrer le nombre d'abscences non justifiées,
 	- pour chaque UE,
 	- Globalement;
+- Pouvoir ajouter un groupe à la création de séance;
 - Détecter les absences répéter.
