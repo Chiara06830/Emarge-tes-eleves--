@@ -23,6 +23,7 @@ export default {
     container5:{
         justifyContent: "center",
         alignItems: "center",
+        flex: 1,
         margin: 5
     },
     containerViewRow: { 
@@ -105,5 +106,5 @@ export default {
         alignSelf: "flex-end",
         margin: 20
     },
-    buttonDeconnexion : '#FF0000'
+    buttonDeconnexion : '#3a3a3a'
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {SafeAreaView, View, Text, FlatList, Button} from 'react-native'
+import {SafeAreaView, View, Text, Button, ScrollView, ActivityIndicator} from 'react-native'
 import Row from'./rowHistorique';
 import Appel from './PageAppel';
 import styles from '../style';
@@ -42,48 +42,43 @@ export default class PageHistoriqueDesSeances extends Component{
     }
 
     render(){
-        const renderItem = ({ item }) => (
-            <Row 
-                id = {item.id}
-                title={item.nomUE} 
-                type={item.type} 
-                filiere={item.nomFiliere}
-                groupe={item.numGroup}
-                date={item.dateSeance}
-                creneau={item.creneau}
-                changeId={this.changeId}/>
-        );
-
-        if(this.state.idSeance<0){
+        if(this.state.idSeance<0 && this.state.data != null){
             return (
-                <View>
+                <View style={styles.container}>
                     <View style={styles.placementButtonDeconnexion}>
                         <Button color={styles.buttonDeconnexion} onPress={() => this.deconnexion()} title="DECONNEXION"/>
                     </View>
-                    <View style={styles.container5}> 
-                        <Text style={styles.title}>Historique des séances</Text>
-                        <SafeAreaView>
-                            <FlatList
-                                data={this.state.data}
-                                renderItem={renderItem}
-                                keyExtractor={item => item.nom}
-                            />
-                        </SafeAreaView>
-                    </View>
-                </View>     
+                    <Text style={styles.title}>Historique des séances</Text>
+                    <SafeAreaView style={styles.container}>
+                    <ScrollView style={styles.scrollView}>
+                        {
+                            this.state.data.map((item, index) => (
+                                    <Row 
+                                        id = {item.id}
+                                        title={item.nomUE} 
+                                        type={item.type} 
+                                        filiere={item.nomFiliere}
+                                        groupe={item.numGroup}
+                                        date={item.dateSeance}
+                                        creneau={item.creneau}
+                                        changeId={this.changeId}/>
+                            ))
+                        }
+                    </ScrollView>
+                    </SafeAreaView>
+                </View>
+            );
+        }else if(this.state.idSeance>0 && this.state.data != null){
+            return (
+                <Appel 
+                    id={this.state.idSeance} 
+                    changeId={this.changeId} 
+                    changeOnglet={this.changeOnglet}
+                />
             );
         }else {
-            return (
-                <View>
-                    <View style={styles.placementButtonDeconnexion}>
-                        <Button color={theme.buttonDeconnexion} onPress={() => this.deconnexion()} title="DECONNEXION"/>
-                    </View>
-                    <Appel 
-                        id={this.state.idSeance} 
-                        changeId={this.changeId} 
-                        changeOnglet={this.changeOnglet}
-                    />
-                </View>
+            return(
+                <ActivityIndicator size="large" color="#ffcc00"/>
             );
         }
     }

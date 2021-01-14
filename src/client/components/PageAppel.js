@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ActivityIndicator, Text, Button, View, FlatList} from 'react-native';
+import {ActivityIndicator, Text, Button, View, ScrollView, SafeAreaView} from 'react-native';
 import styles from '../style';
 import Row from './rowAppel';
 import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
@@ -110,17 +110,6 @@ export default class PageAppel extends Component{
     }
 
     render(){
-        const renderItem = ({ item }) => (
-            <Row 
-                id = {item.idEtudiant}
-                nom = {item.nomEtudiant}
-                prenom = {item.prenomEtudiant}
-                presence = {item.presence}
-                photo = {item.photo}
-                idSeance={this.props.id}
-                setData  = {this.fetchData}/>
-        );
-
         var itemsPicker = [];
         
         if(this.state.items != null){
@@ -137,11 +126,22 @@ export default class PageAppel extends Component{
                     <Text><Text style={{fontWeight: "bold"}}>Groupe :</Text> {this.state.data.nomFiliere} - G{this.state.data.numGroup}</Text>
                     <Text><Text style={{fontWeight: "bold"}}>Date :</Text> {this.formatDate(this.state.data.dateSeance.split("T")[0])}</Text>
                     <Text><Text style={{fontWeight: "bold"}}>Enseignant :</Text> {this.state.data.prenomEnseignant} {this.state.data.nomEnseignant}</Text>
-                    <FlatList
-                        data={this.state.dataTable.sort((a, b) => {a.nomEtudiant.localeCompare(b.nomEtudiant); })}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.id}
-                    />
+                    <SafeAreaView style={styles.container}>
+                    <ScrollView style={styles.scrollView}>
+                        {
+                            this.state.dataTable.map((item, index) => (
+                                <Row 
+                                    id = {item.idEtudiant}
+                                    nom = {item.nomEtudiant}
+                                    prenom = {item.prenomEtudiant}
+                                    presence = {item.presence}
+                                    photo = {item.photo}
+                                    idSeance={this.props.id}
+                                    setData  = {this.fetchData}/>
+                            ))
+                        }
+                    </ScrollView>
+                    </SafeAreaView>
                     <Button color={styles.buttonColor} title="Ajouter des étudiants" onPress={() => this.ajouterEtudiants()}  />
                     <Button color={styles.buttonColor} title="Valider" onPress={() => this.valider()}/>
                     <Dialog
@@ -150,21 +150,12 @@ export default class PageAppel extends Component{
                             this.setState({ visible: false });
                         }}
                     >
-                        <DialogContent>
-                            <View>
+                        <DialogContent style={styles.container5}>
+                            <View style={styles.container5}>
                                 <Text>Etudiants de la promotion :  </Text>
-
-                               {/* <Picker
-                                    style={{width: '60%'}}
-                                    
-                                    
-                                >
-                                    <Picker.Item label="TP" value="TP"/>
-                                    <Picker.Item label="TD" value="TD"/>
-                                    <Picker.Item label="Cours" value="Cours"/>
-                               </Picker>*/}
-
-                               <MultipleSelectPicker 
+                                <SafeAreaView style={styles.container}>
+                                <ScrollView style={styles.scrollView}>
+                                <MultipleSelectPicker 
                                     items = {itemsPicker}
                                     onSelectionsChange={(e) => { this.setState({ selectedItems: e }) }}
                                     selectedItems={this.state.selectedItems}
@@ -172,7 +163,8 @@ export default class PageAppel extends Component{
                                     buttonText='hello'
                                     checkboxStyle={{ height: 20, width: 20 }}
                                 />
-
+                                </ScrollView>
+                                </SafeAreaView>
 
                             </View>                            
                         </DialogContent>
