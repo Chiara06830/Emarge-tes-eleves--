@@ -218,7 +218,7 @@ router.get('/creationSeance', (req,res)=> {
                                         .then(result5 => result5.json())    
                                         .then(result5 => {
                                             return res.json({
-                                                data : result5
+                                                data : result3.data
                                             });
                                         })
                                         .catch(err =>{if(err) throw err;});

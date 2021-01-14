@@ -47,8 +47,6 @@ export default class PageAppel extends Component{
             .then(res => res.json())
             .then(res =>{
                 this.setState({items : res.data});
-                //console.log(this.state.items[0].nomEtudiant);
-
             })
             .catch(err =>{
                 if(err) throw err;
@@ -58,14 +56,10 @@ export default class PageAppel extends Component{
 
     ajouterEtudiants(){
         this.setState({ visible: true });
-        console.log(this.state.visible);
-        this.fetchItems()
-
+        this.fetchItems();
     }
 
     ajouterDataTable(){
-        console.log("dataTable : "+this.state.dataTable.length);
-        
         var studentAdded = [];
         for(var i =0; i<this.state.selectedItems.length; i++){
             studentAdded[i] = this.state.items[this.state.selectedItems[i].value-1].idEtudiant;
@@ -99,13 +93,13 @@ export default class PageAppel extends Component{
         this.setState({dataTable : studentAdded});
         
         this.setState({visible:false});
-
     }
 
 
 
     valider(){
         this.props.changeId(-1);
+        this.fetchData();
         //this.props.changeOnglet('Creation');
     }
 

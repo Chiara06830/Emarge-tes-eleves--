@@ -8,7 +8,7 @@ export default class PageHistoriqueDesSeances extends Component{
     constructor(props){
         super(props);
         this.state = {
-            idSeance : -1,
+            idSeance : this.props.idSeance,
             data : null
         }
     }
@@ -42,6 +42,7 @@ export default class PageHistoriqueDesSeances extends Component{
     }
 
     render(){
+        console.log(this.props.idSeance);
         if(this.state.idSeance<0 && this.state.data != null){
             return (
                 <View style={styles.container}>
@@ -53,15 +54,15 @@ export default class PageHistoriqueDesSeances extends Component{
                     <ScrollView style={styles.scrollView}>
                         {
                             this.state.data.map((item, index) => (
-                                    <Row 
-                                        id = {item.id}
-                                        title={item.nomUE} 
-                                        type={item.type} 
-                                        filiere={item.nomFiliere}
-                                        groupe={item.numGroup}
-                                        date={item.dateSeance}
-                                        creneau={item.creneau}
-                                        changeId={this.changeId}/>
+                                <Row 
+                                    id = {item.id}
+                                    title={item.nomUE} 
+                                    type={item.type} 
+                                    filiere={item.nomFiliere}
+                                    groupe={item.numGroup}
+                                    date={item.dateSeance}
+                                    creneau={item.creneau}
+                                    changeId={this.changeId}/>
                             ))
                         }
                     </ScrollView>

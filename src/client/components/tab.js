@@ -38,8 +38,8 @@ class Tabs extends Component {
                 }
                 }}
             >
-                <Tab.Screen name="Creation" children={()=><PageCreationUneSeance id={this.props.id} changeEtat={this.props.changeEtat} changeId={this.props.changeId}/>}/>
-                <Tab.Screen name="Historique" children={()=><PageHistoriqueDesSeances id={this.props.id} changeEtat={this.props.changeEtat} changeId={this.props.changeId}/>}/>
+                <Tab.Screen name="Creation" children={()=><PageCreationUneSeance id={this.props.id} changeEtat={this.props.changeEtat} changeId={this.props.changeId} changeIdSeance={this.props.changeIdSeance}/>}/>
+                <Tab.Screen name="Historique" children={()=><PageHistoriqueDesSeances id={this.props.id} changeEtat={this.props.changeEtat} changeId={this.props.changeId} idSeance={this.props.idSeance}/>}/>
             </Tab.Navigator>
             </NavigationContainer>
         );
@@ -51,7 +51,7 @@ export default class Onglet extends Component{
         return (
             <View style={{flex: 1}}>
                 <StatusBar hidden={true}/>
-                <Tabs id={this.props.id} changeEtat={this.props.changeEtat} changeId={this.props.changeId} />
+                <Tabs id={this.props.id} changeEtat={this.props.changeEtat} changeId={this.props.changeId} changeIdSeance={this.props.changeIdSeance} idSeance={this.props.idSeance}/>
             </View>
         );
     }

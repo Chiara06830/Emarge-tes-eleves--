@@ -21,7 +21,7 @@ export class ChangerMotDePasse extends Component {
     onPress= (e) => {
         if((this.state.nouveauMdp!== '') && (this.state.nouveauMdpConf!== '') && (this.state.nouveauMdp === this.state.nouveauMdpConf)  ){
             if(this.state.nouveauMdp === this.state.nouveauMdpConf){
-                fetch(`http://localhost:5600/updatePassword?identifiant=${this.props.id}&password=${this.state.nouveauMdp}`)
+                fetch(`http://localhost:5700/updatePassword?identifiant=${this.props.id}&password=${this.state.nouveauMdp}`)
                 .then(res => res.json())
                 .then(res => {
                     if(res.data){

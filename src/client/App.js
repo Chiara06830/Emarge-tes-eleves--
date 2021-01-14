@@ -9,7 +9,8 @@ import PageErreur from './components/erreur';
 class Index extends React.Component {
     state = {
         etat: 'connexion',
-        id : -2
+        id : -2,
+        idSeance : -1
     }
 
     changeEtat = (valeur) => {
@@ -24,9 +25,15 @@ class Index extends React.Component {
       })
     }
 
+    changeIdSeance = (id) => {
+      this.setState({
+        idSeance : id
+      })
+    }
+
     render() {
-      const page = this.state.etat === 'connexion' ? <PageConnexion changeEtat={this.changeEtat} changeId={this.changeId}/> : 
-      this.state.etat === 'sceance' ? <Onglet changeEtat={this.changeEtat} id={this.state.id} changeId={this.changeId}/> :
+      const page = this.state.etat === 'connexion' ? <PageConnexion changeEtat={this.changeEtat} changeId={this.changeId} /> : 
+      this.state.etat === 'sceance' ? <Onglet changeEtat={this.changeEtat} id={this.state.id} changeId={this.changeId} changeIdSeance={this.changeIdSeance} idSeance={this.state.idSeance}/> :
       this.state.etat === 'motDePasseOublie' ? <MotDePasseOublie changeEtat={this.changeEtat} changeId={this.changeId}/> :
       this.state.etat === 'changerMotDePasse' ? <ChangerMotDePasse changeEtat={this.changeEtat} id={this.state.id}/> : 
       <PageErreur/>

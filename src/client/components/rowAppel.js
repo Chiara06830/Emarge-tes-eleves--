@@ -87,6 +87,7 @@ export default class Row extends React.Component{
 
     fetchPresence() {
         let val = !this.state.checked ? (this.state.value + 2) : 1;
+        console.log(val);
         fetch(`http://localhost:5700/presence?idSeance=${this.props.idSeance}&idEtudiant=${this.props.id}&valeur=${val}`)
             .catch(err =>{
                 if(err) throw err;

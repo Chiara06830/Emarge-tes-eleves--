@@ -31,7 +31,7 @@ class PageCreationUneSeance extends Component {
         fetch(`http://localhost:5600/creationSeance?nomUE=${this.state.nomUE}&typeDeCours=${this.state.typeDeCours}&groupe=${this.state.groupe}&date=${formatDate}&creneau=${creneau}&id=${this.props.id}`)
             .then(res => res.json())
             .then(res => {
-                
+                this.props.changeIdSeance(res.data);
             })
             .catch(err =>{
                 if(err) throw err;
