@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 import {ActivityIndicator, Text, Button, View, FlatList} from 'react-native';
 import styles from '../style';
 import Row from './rowAppel';
+import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
+import { MultipleSelectPicker } from 'react-native-multi-select-picker';
+
 
 export default class PageAppel extends Component{
     constructor(props){
         super(props);
         this.state = {
             data : null,
-            dataTable: null
+            dataTable: null,
+            visible :false,
+            selectedItems: [],
+            items : null
         }
     }
 
@@ -22,6 +28,7 @@ export default class PageAppel extends Component{
 
     componentDidMount(){
         this.fetchData();
+        this.fetchItems();
     }
 
     fetchData = () => {
@@ -35,6 +42,67 @@ export default class PageAppel extends Component{
                 if(err) throw err;
             });
     }
+    fetchItems = () =>{
+        fetch(`http://localhost:5600/selection`)
+            .then(res => res.json())
+            .then(res =>{
+                this.setState({items : res.data});
+                //console.log(this.state.items[0].nomEtudiant);
+
+            })
+            .catch(err =>{
+                if(err) throw err;
+                
+            })
+    }
+
+    ajouterEtudiants(){
+        this.setState({ visible: true });
+        console.log(this.state.visible);
+        this.fetchItems()
+
+    }
+
+    ajouterDataTable(){
+        console.log("dataTable : "+this.state.dataTable.length);
+        
+        var studentAdded = [];
+        for(var i =0; i<this.state.selectedItems.length; i++){
+            studentAdded[i] = this.state.items[this.state.selectedItems[i].value-1].idEtudiant;
+        }
+
+        var id = this.props.id;
+        for(var j=0;j<studentAdded.length;j++){
+            fetch(`http://localhost:5600/ajoutEtudiant?idEtudiant=${studentAdded[j]}&idSeance=${id}`)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res.data); 
+            })
+            .catch(err =>{
+                if(err) throw err;
+            });
+        }  
+    
+        var studentAdded = [];
+        for( i =0;i<this.state.dataTable.length;i++ ){
+            studentAdded[i]=this.state.dataTable[i];
+
+        }
+       
+        j = studentAdded.length ;
+        for(i =0; i<this.state.selectedItems.length; i++){
+            studentAdded[j] = this.state.items[this.state.selectedItems[i].value-1];
+            j++;
+
+        }
+            
+        this.setState({dataTable : studentAdded});
+        
+        this.setState({visible:false});
+
+    }
+
+
 
     valider(){
         this.props.changeId(-1);
@@ -53,6 +121,14 @@ export default class PageAppel extends Component{
                 setData  = {this.fetchData}/>
         );
 
+        var itemsPicker = [];
+        
+        if(this.state.items != null){
+            for(var i=0; i<this.state.items.length;i++){
+                itemsPicker[i] = {label : this.state.items[i].nomEtudiant+" "+this.state.items[i].prenomEtudiant, value : i + 1};
+            }
+        }
+
         if(this.state.data != null && this.state.dataTable != null){
             return (
                 <View style={styles.container5}>
@@ -66,7 +142,57 @@ export default class PageAppel extends Component{
                         renderItem={renderItem}
                         keyExtractor={item => item.id}
                     />
+                    <Button color={styles.buttonColor} title="Ajouter des étudiants" onPress={() => this.ajouterEtudiants()}  />
                     <Button color={styles.buttonColor} title="Valider" onPress={() => this.valider()}/>
+                    <Dialog
+                        visible={this.state.visible}
+                        onTouchOutside={() => {
+                            this.setState({ visible: false });
+                        }}
+                    >
+                        <DialogContent>
+                            <View>
+                                <Text>Etudiants de la promotion :  </Text>
+
+                               {/* <Picker
+                                    style={{width: '60%'}}
+                                    
+                                    
+                                >
+                                    <Picker.Item label="TP" value="TP"/>
+                                    <Picker.Item label="TD" value="TD"/>
+                                    <Picker.Item label="Cours" value="Cours"/>
+                               </Picker>*/}
+
+                               <MultipleSelectPicker 
+                                    items = {itemsPicker}
+                                    onSelectionsChange={(e) => { this.setState({ selectedItems: e }) }}
+                                    selectedItems={this.state.selectedItems}
+                                    buttonStyle={{ height: 100, justifyContent: 'center', alignItems: 'center' }}
+                                    buttonText='hello'
+                                    checkboxStyle={{ height: 20, width: 20 }}
+                                />
+
+
+                            </View>                            
+                        </DialogContent>
+
+                        <DialogFooter>
+                            <DialogButton
+                                text="Retour"
+                                onPress={() => {
+                                    this.setState({visible: false});
+                                }}
+                            >                   
+                            </DialogButton>
+
+                            <DialogButton
+                                text="Valider"
+                                onPress={() => this.ajouterDataTable()}
+                            >
+                            </DialogButton>
+                        </DialogFooter>
+                    </Dialog>
                 </View>
             );
         }else {

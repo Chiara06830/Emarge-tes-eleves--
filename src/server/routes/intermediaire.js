@@ -167,6 +167,34 @@ router.get('/selectionGroupe', (req,res)=> {
         .catch(err =>{if(err) throw err;});
 });
 
+//Selection étudiants : 
+router.get('/selection', (req,res)=>{
+    fetch(`${host}:${portDest}/selection/etudiant`)
+        .then(res => res.json())
+        .then(result => {
+            return res.json({
+                data : result.data
+            })
+        })
+        .catch(err =>{if(err) throw err;});
+
+});
+
+
+router.get('/ajoutEtudiant',(req,res) =>{
+    const{idEtudiant,idSeance} = req.query;
+
+    fetch(`${host}:${portDest}/ajout?idEtudiant=${idEtudiant}&idSeance=${idSeance}`)
+    .then(res => res.json())    
+        .then(result => {
+            return res.json({
+                data : result.data
+            });
+        })
+        .catch(err =>{if(err) throw err;});
+
+});
+
 //Création d'une séance : 
 router.get('/creationSeance', (req,res)=> {
     const {nomUE, typeDeCours, groupe, date, creneau, id} = req.query; 

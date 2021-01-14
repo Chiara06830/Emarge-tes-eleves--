@@ -9,8 +9,8 @@ const port = 5700;
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root', 
-    password: 'motdepasse',
-    database: 'sauvegardeteseleves'
+    password: 'EfDWAnB98rnxyLO5',
+    database: 'sauvegardeTesEleves'
 });
 
 //BDD : connexion
@@ -222,6 +222,39 @@ router.get('/suppression', function(req, res, next){
     deleteConnexion();
 });
 
+//Ajout d'un élève dans la scéance
+router.get('/ajout',function(req,res){
+    const{idEtudiant,idSeance} = req.query;
+
+    getConnexion();
+    console.log("ajout");
+    console.log("ID ETUDIANT : "+idEtudiant);
+
+    let query = `INSERT INTO PARTICIPATION(idParticipation, commentaire, unTypeParticipation, unEtudiant, uneSeance)VALUES('0',NULL,'1','${idEtudiant}','${idSeance}')`;
+
+        connection.query(query, function(error, results) {
+            console.log("ajout query");
+            var data = true;
+            if(error){
+                data = false;
+                throw error;
+            }
+            return res.json({
+                data : data
+            });
+        });
+
+    console.log("Fin ajout")
+    deleteConnexion();
+
+
+
+
+});
+
+
+
+
 //Récupération de l'adressse email 
 
 router.get('/recovery',(req,res) =>{
@@ -323,6 +356,30 @@ router.get('/selectionGroupe', (req,res)=> {
     });
     deleteConnexion();
 });
+
+//Selection étudiants : 
+router.get('/selection/etudiant', function(req, res, next) {
+    const {id, info} = req.query;
+
+    getConnexion();
+
+    let query = `SELECT DISTINCT ETUDIANT.idEtudiant, ETUDIANT.nomEtudiant, ETUDIANT.prenomEtudiant, ETUDIANT.photo
+        FROM ETUDIANT`;
+
+    connection.query(query, function (error, results) {
+        var data = results;
+        if(error) {
+            data = false;
+            throw error;
+        }
+        return res.json({
+            data : data
+        });
+    });
+
+    deleteConnexion();
+});
+
 
 //Création d'une séance : 
 router.get('/creationSeance', (req,res)=> {
