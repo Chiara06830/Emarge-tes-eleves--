@@ -76,7 +76,7 @@ INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissa
 INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissance`, `unGroupe`, `photo`)
     VALUES(2, "Starr", "Ringo", DATE("1940-07-7"), 2, "ringo-starr-306872-1-402.jpeg");
 INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissance`, `unGroupe`)
-    VALUES(3, "Starr", "Ringo", DATE("1940-10-9"), 2);
+    VALUES(3, "Lennon", "John", DATE("1940-10-9"), 2);
 INSERT INTO ETUDIANT (`idEtudiant`, `nomEtudiant`, `prenomEtudiant`, `dateNaissance`, `unGroupe`)
     VALUES(4, "Harrison", "George", DATE("1943-02-25"), 2);
 
