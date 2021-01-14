@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Button } from 'react-native-elements';
 import { format } from "date-fns";
-import { TouchableOpacity, View, Text, TextInput, Picker, Image } from 'react-native'
+import { TouchableOpacity, View, Text, TextInput, Picker, Image, Button } from 'react-native'
 import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
 import DatePicker from 'react-date-picker'
 import TimePicker from 'react-time-picker'
@@ -198,7 +197,7 @@ class PageCreationUneSeance extends Component {
                                 />
                             </View>
                         </View>
-                        <Button onPress={() => this.creationSeance()} title="Création"/>
+                        <Button color={theme.buttonColor} onPress={() => this.creationSeance()} title="CREATION"/>
                     </View>
                 </View>
             </View>

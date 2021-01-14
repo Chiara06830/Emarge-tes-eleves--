@@ -9,7 +9,7 @@ const port = 5700;
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root', 
-    password: 'EfDWAnB98rnxyLO5',
+    password: 'motdepasse',
     database: 'sauvegardeTesEleves'
 });
 
@@ -122,7 +122,7 @@ router.get('/sceance/etudiant', function(req, res, next) {
 
     let query = `SELECT DISTINCT ETUDIANT.idEtudiant, ETUDIANT.nomEtudiant, ETUDIANT.prenomEtudiant,TYPEPARTICIPATION.nomType, ETUDIANT.photo
         FROM ETUDIANT, PARTICIPATION, TYPEPARTICIPATION, SEANCE
-        WHERE SEANCE.unGroupe = ETUDIANT.unGroupe AND PARTICIPATION.unEtudiant = ETUDIANT.idEtudiant
+        WHERE PARTICIPATION.unEtudiant = ETUDIANT.idEtudiant
         AND PARTICIPATION.uneSeance = SEANCE.idSeance AND TYPEPARTICIPATION.idType = PARTICIPATION.unTypeParticipation
         AND SEANCE.idSeance = ${id}`;
 
@@ -230,7 +230,7 @@ router.get('/ajout',function(req,res){
     console.log("ajout");
     console.log("ID ETUDIANT : "+idEtudiant);
 
-    let query = `INSERT INTO PARTICIPATION(idParticipation, commentaire, unTypeParticipation, unEtudiant, uneSeance)VALUES('0',NULL,'1','${idEtudiant}','${idSeance}')`;
+    let query = `INSERT INTO PARTICIPATION(idParticipation, commentaire, unTypeParticipation, unEtudiant, uneSeance)VALUES('0',NULL,'2','${idEtudiant}','${idSeance}')`;
 
         connection.query(query, function(error, results) {
             console.log("ajout query");

@@ -14,7 +14,7 @@ export default class Row extends React.Component{
             {label: 'Covid', value:2}
         ];
         this.state = {
-            commentaire : "plop",
+            commentaire : "",
             visible : false,
             checked : false,
             alert : false,

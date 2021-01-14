@@ -88,7 +88,7 @@ export default class PageAppel extends Component{
             studentAdded[i]=this.state.dataTable[i];
 
         }
-       
+
         j = studentAdded.length ;
         for(i =0; i<this.state.selectedItems.length; i++){
             studentAdded[j] = this.state.items[this.state.selectedItems[i].value-1];

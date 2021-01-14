@@ -56,17 +56,19 @@ export default {
     },
     input: {
         margin: 10,
+        height: 40,
         borderColor: 'gray', 
         borderWidth: 1, 
         padding : 5,
-        backgroundColor : 'white'
+        backgroundColor : 'white',
+        paddingHorizontal: 100
     },
     input2: {
         marginTop: 15,
         height: 40, 
         borderColor: 'gray', 
         borderWidth: 1, 
-        paddingHorizontal: 100
+        paddingHorizontal: 80
     },
     item: {
         flexDirection: 'row',
@@ -82,8 +84,7 @@ export default {
         backgroundColor: '#ffffff',
         padding: 5,
         margin : 2,
-        flex: 1,
-        width: Dimensions.get('window').width
+        width : 320
     },
     textArea: {
         borderColor: 'gray', 
