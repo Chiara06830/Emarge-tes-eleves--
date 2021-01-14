@@ -99,5 +99,11 @@ export default {
     popupAjouterUE: {
         padding: 5
     },
-    buttonColor : '#3a3a3a'
+    buttonColor : '#3a3a3a',
+    placementButtonDeconnexion: {
+        maxWidth: "120px",
+        alignSelf: "flex-end",
+        margin: 20
+    },
+    buttonDeconnexion : '#FF0000'
 }

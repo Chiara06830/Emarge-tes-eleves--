@@ -26,7 +26,7 @@ class Index extends React.Component {
 
     render() {
       const page = this.state.etat === 'connexion' ? <PageConnexion changeEtat={this.changeEtat} changeId={this.changeId}/> : 
-      this.state.etat === 'sceance' ? <Onglet changeEtat={this.changeEtat} id={this.state.id}/> :
+      this.state.etat === 'sceance' ? <Onglet changeEtat={this.changeEtat} id={this.state.id} changeId={this.changeId}/> :
       this.state.etat === 'motDePasseOublie' ? <MotDePasseOublie changeEtat={this.changeEtat} changeId={this.changeId}/> :
       this.state.etat === 'changerMotDePasse' ? <ChangerMotDePasse changeEtat={this.changeEtat} id={this.state.id}/> : 
       <PageErreur/>

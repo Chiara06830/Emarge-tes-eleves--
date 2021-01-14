@@ -50,6 +50,11 @@ class PageCreationUneSeance extends Component {
             });
     }
 
+    deconnexion() {
+        this.props.changeId(-1);
+        this.props.changeEtat('connexion');
+    }
+
     acquisitionDesUE() {
         fetch(`http://localhost:5600/selectionUE?id=${this.props.id}`)
             .then(response => response.json())
@@ -102,102 +107,107 @@ class PageCreationUneSeance extends Component {
         if (this.state.listeUEPicker.length < 1) this.acquisitionDesUE();
         if (this.state.listeGroupePicker.length < 1) this.acquisitionDesGroupe();
         return(
-            <View style={theme.container}>
-                <View style={theme.container3}>
-                    <Text style={theme.title}>Création d'une séance{"\n"}</Text>
-                    <Text style={theme.title2}>Choix de l'UE</Text>
+            <View>
+                <View style={theme.placementButtonDeconnexion}>
+                    <Button color={theme.buttonDeconnexion} onPress={() => this.deconnexion()} title="DECONNEXION"/>
                 </View>
-                <View style={theme.container4}>
-                    <Text style={theme.texte}>Nom de l'UE :</Text>
-                    <View style={theme.containerViewRow}>
-                        <Picker
-                            style={{width: '80%'}}
-                            selectedValue={this.state.nomUE}
-                            onValueChange={(itemValue) => this.setState({nomUE: itemValue})}
-                        >
-                            {this.state.listeUEPicker}
-                        </Picker>
-                        {/*<Button onPress={() => this.setState({menuCreationUE: !menuCreationUE})} icon={<Icon name="arrow-right" size={15} color="white"/>}/>*/}
-                        <TouchableOpacity onPress={() => this.setState({menuCreationUE: !this.state.menuCreationUE})}>
-                            <Image source={require('./icons/ajout.png')} style={{width:30, height:30}}/>
-                        </TouchableOpacity>
-                        <Dialog style={theme.popupAjouterUE} visible={this.state.menuCreationUE} onTouchOutside={() => { this.setState({ menuCreationUE: false }); }}>
-                            <DialogContent>
-                                <View style={theme.container2}>
-                                    <Text>Création d'une nouvelle UE</Text>
-                                    <TextInput style={theme.input2} type="text" placeholder='Nom de la nouvelle UE'
-                                        onChangeText={(value) => this.setState({nomNouvelleUE: value})}
-                                        value={this.state.nomNouvelleUE}
-                                    />
-                                </View>
-                            </DialogContent>
-                            <DialogFooter>
-                                <DialogButton
-                                    text="Retour"
-                                    onPress={() => {
-                                        this.setState({ menuCreationUE: false });
-                                    }}
-                                />
-                                <DialogButton
-                                    text="Valider"
-                                    onPress= {() => {
-                                        this.setState({ menuCreationUE: false });
-                                        this.creationUE()}
-                                    }
-                                />
-                            </DialogFooter>
-                        </Dialog>
-                    </View>
-                    <View style={theme.containerViewRow}>
-                        <View>
-                            <Text style={theme.texte}>{"\n"}Type de cours :          </Text>
-                            <Picker
-                                style={{width: '60%'}}
-                                selectedValue={this.state.typeDeCours}
-                                onValueChange={(itemValue) => this.setState({typeDeCours: itemValue})}
-                            >
-                                <Picker.Item label="TP" value="TP"/>
-                                <Picker.Item label="TD" value="TD"/>
-                                <Picker.Item label="Cours" value="Cours"/>
-                            </Picker>
-                        </View>
-                        <View>
-                            <Text style={theme.texte2}>{"\n"}Groupe :                       </Text>
-                            <Picker
-                                style={{width: '100%'}}
-                                selectedValue={this.state.groupe}
-                                onValueChange={(itemValue) => this.setState({groupe: itemValue})}
-                            >
-                                {this.state.listeGroupePicker}
-                            </Picker>
-                        </View>
-                    </View>
+                <View style={theme.container}>
                     <View style={theme.container3}>
-                        <Text style={theme.title2}>{"\n"}Choix des horaires</Text>
+                        <Text style={theme.title}>Création d'une séance{"\n"}</Text>
+                        <Text style={theme.title2}>Choix de l'UE</Text>
+                    </View>
+                    <View style={theme.container4}>
+                        <Text style={theme.texte}>Nom de l'UE :</Text>
                         <View style={theme.containerViewRow}>
-                            <Text style={theme.texte2}>Date :   </Text>
-                            <DatePicker
-                                onChange={(date) => {this.setState({date: date})}}
-                                value={this.state.date}
-                            />
+                            <Picker
+                                style={{width: '80%'}}
+                                selectedValue={this.state.nomUE}
+                                onValueChange={(itemValue) => this.setState({nomUE: itemValue})}
+                            >
+                                {this.state.listeUEPicker}
+                            </Picker>
+                            {/*<Button onPress={() => this.setState({menuCreationUE: !menuCreationUE})} icon={<Icon name="arrow-right" size={15} color="white"/>}/>*/}
+                            <TouchableOpacity onPress={() => this.setState({menuCreationUE: !this.state.menuCreationUE})}>
+                                <Image source={require('./icons/ajout.png')} style={{width:30, height:30}}/>
+                            </TouchableOpacity>
+                            <Dialog style={theme.popupAjouterUE} visible={this.state.menuCreationUE} onTouchOutside={() => { this.setState({ menuCreationUE: false }); }}>
+                                <DialogContent>
+                                    <View style={theme.container2}>
+                                        <Text>Création d'une nouvelle UE</Text>
+                                        <TextInput style={theme.input2} type="text" placeholder='Nom de la nouvelle UE'
+                                            onChangeText={(value) => this.setState({nomNouvelleUE: value})}
+                                            value={this.state.nomNouvelleUE}
+                                        />
+                                    </View>
+                                </DialogContent>
+                                <DialogFooter>
+                                    <DialogButton
+                                        text="Retour"
+                                        onPress={() => {
+                                            this.setState({ menuCreationUE: false });
+                                        }}
+                                    />
+                                    <DialogButton
+                                        text="Valider"
+                                        onPress= {() => {
+                                            this.setState({ menuCreationUE: false });
+                                            this.creationUE()}
+                                        }
+                                    />
+                                </DialogFooter>
+                            </Dialog>
                         </View>
                         <View style={theme.containerViewRow}>
-                            <View style={theme.decalerDroite}>
-                                <Text style={theme.texte2}>Heure de début :   </Text>
-                                <TimePicker
-                                    onChange={(debut) => {this.setState({debut: debut})}}
-                                    value={this.state.debut}
-                                />
+                            <View>
+                                <Text style={theme.texte}>{"\n"}Type de cours :          </Text>
+                                <Picker
+                                    style={{width: '60%'}}
+                                    selectedValue={this.state.typeDeCours}
+                                    onValueChange={(itemValue) => this.setState({typeDeCours: itemValue})}
+                                >
+                                    <Picker.Item label="TP" value="TP"/>
+                                    <Picker.Item label="TD" value="TD"/>
+                                    <Picker.Item label="Cours" value="Cours"/>
+                                </Picker>
                             </View>
                             <View>
-                                <Text style={theme.texte2}>Heure de fin :   </Text>
-                                <TimePicker
-                                    onChange={(fin) => {this.setState({fin: fin})}}
-                                    value={this.state.fin}
-                                />
+                                <Text style={theme.texte2}>{"\n"}Groupe :                       </Text>
+                                <Picker
+                                    style={{width: '100%'}}
+                                    selectedValue={this.state.groupe}
+                                    onValueChange={(itemValue) => this.setState({groupe: itemValue})}
+                                >
+                                    {this.state.listeGroupePicker}
+                                </Picker>
                             </View>
                         </View>
-                        <Button color={theme.buttonColor} onPress={() => this.creationSeance()} title="CREATION"/>
+                        <View style={theme.container3}>
+                            <Text style={theme.title2}>{"\n"}Choix des horaires</Text>
+                            <View style={theme.containerViewRow}>
+                                <Text style={theme.texte2}>Date :   </Text>
+                                <DatePicker
+                                    onChange={(date) => {this.setState({date: date})}}
+                                    value={this.state.date}
+                                />
+                            </View>
+                            <View style={theme.containerViewRow}>
+                                <View style={theme.decalerDroite}>
+                                    <Text style={theme.texte2}>Heure de début :   </Text>
+                                    <TimePicker
+                                        onChange={(debut) => {this.setState({debut: debut})}}
+                                        value={this.state.debut}
+                                    />
+                                </View>
+                                <View>
+                                    <Text style={theme.texte2}>Heure de fin :   </Text>
+                                    <TimePicker
+                                        onChange={(fin) => {this.setState({fin: fin})}}
+                                        value={this.state.fin}
+                                    />
+                                </View>
+                            </View>
+                            <Button color={theme.buttonColor} onPress={() => this.creationSeance()} title="CREATION"/>
+                        </View>
                     </View>
                 </View>
             </View>
