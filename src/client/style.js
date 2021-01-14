@@ -101,7 +101,7 @@ export default {
     },
     buttonColor : '#3a3a3a',
     placementButtonDeconnexion: {
-        maxWidth: "120px",
+        maxWidth: "150px",
         alignSelf: "flex-end",
         margin: 20
     },

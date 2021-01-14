@@ -40,10 +40,10 @@ class PageCreationUneSeance extends Component {
 
     creationUE() {
         console.log(this.state.nomNouvelleUE);
-        fetch(`http://localhost:5600/creationUE?nomUE=${this.state.nomNouvelleUE}`)
+        fetch(`http://localhost:5600/creationUE?nomUE=${this.state.nomNouvelleUE}&idEnseignant=${this.props.id}`)
             .then(res => res.json())
             .then(res => {
-                
+                this.acquisitionDesUE();
             })
             .catch(err =>{
                 if(err) throw err;

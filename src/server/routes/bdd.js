@@ -494,16 +494,60 @@ router.get('/creationUE', (req,res)=> {
 
     getConnexion();
 
-    /*let query = `INSERT INTO UE 
-    (nomUE) 
-    VALUES ('${nomUE}')`;*/
     let query = `REPLACE INTO UE
     SET nomUE = '${nomUE}'`;
     
-    console.log(query);
     connection.query(query, function(error, results) {
         var data = results;
-        console.log(results);
+        if(error){
+            data = false;
+            throw error;
+        }
+        return res.json({
+            data : data
+        });
+    });
+    deleteConnexion();
+});
+
+//Retrouver mon UE : 
+router.get('/retrouverMonUE', (req,res)=> {
+    const {nomUE} = req.query; 
+
+    getConnexion();
+
+    let query = `SELECT idUE
+    FROM UE 
+    WHERE nomUE = '${nomUE}'`;
+    
+    connection.query(query, function(error, results) {
+        var data = null;
+        if(error){
+            data = -1;
+            throw error;
+        } else {
+            data = results[0].idUE;
+        }
+        return res.json({
+            data : data
+        });
+    });
+    deleteConnexion();
+});
+
+//Création d'une relation enseignant UE : 
+router.get('/creationRelationEnseignantUE', (req,res)=> {
+    const {idUE, idEnseignant} = req.query; 
+    console.log(idUE);
+
+    getConnexion();
+    
+    let query = `INSERT INTO RELATION_UE_ENSEIGNANT 
+    (unEnseignant, uneUE) 
+    VALUES ('${idEnseignant}', '${idUE}')`;
+    
+    connection.query(query, function(error, results) {
+        var data = results;
         if(error){
             data = false;
             throw error;

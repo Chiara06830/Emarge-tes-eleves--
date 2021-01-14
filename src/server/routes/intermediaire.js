@@ -234,15 +234,27 @@ router.get('/creationSeance', (req,res)=> {
 
 //Creation d'une UE : 
 router.get('/creationUE', (req,res)=> {
-    const {nomUE} = req.query;
+    const {nomUE, idEnseignant} = req.query;
     console.log(nomUE);
     fetch(`${host}:${portDest}/creationUE?nomUE=${nomUE}`)
-        .then(res => res.json())    
+        .then(result => result.json())    
         .then(result => {
             console.log(result);
-            return res.json({
-                data : result.data
-            });
+            fetch(`${host}:${portDest}/retrouverMonUE?nomUE=${nomUE}`)
+                .then(result2 => result2.json())    
+                .then(result2 => {
+                    if (result2.data != -1) {
+                        fetch(`${host}:${portDest}/creationRelationEnseignantUE?idUE=${result2.data}&idEnseignant=${idEnseignant}`)
+                            .then(result3 => result3.json())    
+                            .then(result3 => {
+                                return res.json({
+                                    data : result3.data
+                                });
+                            })
+                            .catch(err =>{if(err) throw err;});
+                    }
+                })
+                .catch(err =>{if(err) throw err;});
         })
         .catch(err =>{if(err) throw err;});
 });
