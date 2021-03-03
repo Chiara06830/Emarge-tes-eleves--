@@ -42,11 +42,11 @@ export default class PageHistoriqueDesSeances extends Component{
     }
 
     render(){
-        if(this.state.data === null) {
+        if(this.state.data === null) { //si on est en train de charger les séances
             return(
                 <ActivityIndicator size="large" color="#ffcc00"/>
             );
-        }else if(this.props.idSeance > 0){
+        }else if(this.props.idSeance > 0){ //si on fait un appel
             return (
                 <Appel 
                     id={this.props.idSeance}
@@ -54,7 +54,7 @@ export default class PageHistoriqueDesSeances extends Component{
                     changeOnglet={this.changeOnglet}
                 />
             );
-        }else{
+        }else{ //sinon c'est l'historique
             this.state.data.sort((a,b)=>b.dateSeance.getTime()-a.dateSeance.getTime());
             return (
                 <View style={styles.container}>
@@ -67,6 +67,7 @@ export default class PageHistoriqueDesSeances extends Component{
                         {
                             this.state.data.map((item, index) => (
                                 <Row 
+                                    key={item.id}
                                     id = {item.id}
                                     title={item.nomUE} 
                                     type={item.type} 
@@ -74,7 +75,8 @@ export default class PageHistoriqueDesSeances extends Component{
                                     groupe={item.numGroup}
                                     date={item.dateSeance}
                                     creneau={item.creneau}
-                                    changeIdSeance={this.props.changeIdSeance}/>
+                                    changeIdSeance={this.props.changeIdSeance}
+                                />
                             ))
                         }
                     </ScrollView>

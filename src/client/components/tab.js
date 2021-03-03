@@ -39,7 +39,7 @@ class Tabs extends Component {
                 }}
             >
                 <Tab.Screen name="Creation" children={()=><PageCreationUneSeance id={this.props.id} changeEtat={this.props.changeEtat} changeId={this.props.changeId} changeIdSeance={this.props.changeIdSeance}/>}/>
-                <Tab.Screen name="Historique" children={()=><PageHistoriqueDesSeances id={this.props.id} changeEtat={this.props.changeEtat} changeIdSeance={this.props.changeIdSeance} idSeance={this.props.idSeance}/>}/>
+                <Tab.Screen name="Historique" children={()=><PageHistoriqueDesSeances id={this.props.id} changeEtat={this.props.changeEtat} changeId={this.props.changeId} changeIdSeance={this.props.changeIdSeance} idSeance={this.props.idSeance}/>}/>
             </Tab.Navigator>
             </NavigationContainer>
         );

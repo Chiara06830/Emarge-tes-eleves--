@@ -48,9 +48,7 @@ export default class Row extends React.Component{
             .then(res => res.json())
             .then(res => {
                 if(res[0].commentaire != null){
-                    //console.log("**" + this.props.nom + " - " + res[0].commentaire);
-                    this.setState({commentaire : res.commentaire});
-                    //console.log("--" + this.props.nom + " - " + this.state.commentaire);
+                    this.setState({commentaire : res[0].commentaire});
                 }  
             })
             .catch(err =>{
@@ -87,7 +85,6 @@ export default class Row extends React.Component{
 
     fetchPresence() {
         let val = !this.state.checked ? (this.state.value + 2) : 1;
-        console.log(val);
         fetch(`http://localhost:5700/presence?idSeance=${this.props.idSeance}&idEtudiant=${this.props.id}&valeur=${val}`)
             .catch(err =>{
                 if(err) throw err;
@@ -95,7 +92,6 @@ export default class Row extends React.Component{
     }
 
     render(){
-        //console.log(this.props.nom + " - " + this.state.commentaire);
         const photo = this.props.photo === null ? 'profil.PNG' : this.props.photo;
         const radio = this.state.checked ? <View></View> : (
             <RadioForm

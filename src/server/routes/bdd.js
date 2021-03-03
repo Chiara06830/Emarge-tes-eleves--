@@ -359,12 +359,13 @@ router.get('/selectionGroupe', (req,res)=> {
 
 //Selection étudiants : 
 router.get('/selection/etudiant', function(req, res, next) {
-    const {id, info} = req.query;
+    const {id} = req.query;
 
     getConnexion();
 
     let query = `SELECT DISTINCT ETUDIANT.idEtudiant, ETUDIANT.nomEtudiant, ETUDIANT.prenomEtudiant, ETUDIANT.photo
-        FROM ETUDIANT`;
+    FROM etudiant, seance
+    WHERE etudiant.unGroupe <> seance.unGroupe AND seance.idSeance = ${id}`;
 
     connection.query(query, function (error, results) {
         var data = results;

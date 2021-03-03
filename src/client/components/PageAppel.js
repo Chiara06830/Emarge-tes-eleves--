@@ -40,10 +40,17 @@ export default class PageAppel extends Component{
 
     //récupère liste des élèves
     fetchItems = () =>{
-        fetch(`http://localhost:5600/selection`)
+        fetch(`http://localhost:5600/selection?idSeance=${this.props.id}`)
             .then(res => res.json())
             .then(res =>{
-                console.log(res);
+                //tri des etudiants par leurs nom de famille
+                res.data.sort(function(a, b) {
+                    var nameA = a.nomEtudiant.toUpperCase();
+                    var nameB = b.nomEtudiant.toUpperCase();
+                    if (nameA < nameB) {return -1;}
+                    if (nameA > nameB) { return 1;}
+                    return 0;  
+                });
                 this.setState({items : res.data});
             })
             .catch(err =>{
@@ -78,10 +85,6 @@ export default class PageAppel extends Component{
         var id = this.props.id;
         for(var j=0;j<studentAdded.length;j++){
             fetch(`http://localhost:5600/ajoutEtudiant?idEtudiant=${studentAdded[j]}&idSeance=${id}`)
-            .then(res => res.json())
-            .then(res => {
-                console.log(res.data); 
-            })
             .catch(err =>{
                 if(err) throw err;
             });
@@ -101,11 +104,10 @@ export default class PageAppel extends Component{
         }
             
         this.setState({dataTable : studentAdded});
-        
         this.setState({visible:false});
     }
 
-    //envoie des données
+    //retourner à l'historique
     valider(){
         this.props.changeIdSeance(-1);
         this.fetchData();
@@ -143,6 +145,7 @@ export default class PageAppel extends Component{
                         {
                             this.state.dataTable.map((item, index) => (
                                 <Row 
+                                    key={item.idEtudiant}
                                     id = {item.idEtudiant}
                                     nom = {item.nomEtudiant}
                                     prenom = {item.prenomEtudiant}
@@ -154,6 +157,8 @@ export default class PageAppel extends Component{
                         }
                     </ScrollView>
                     </SafeAreaView>
+
+                    {/* boutons de gestion*/}
                     <Button color={styles.buttonColor} title="Ajouter des étudiants" onPress={() => this.ajouterEtudiants()}  />
                     <Button color={styles.buttonColor} title="Valider" onPress={() => this.valider()}/>
 
@@ -201,7 +206,7 @@ export default class PageAppel extends Component{
                     </Dialog>
                 </View>
             );
-        }else {
+        }else { // si les données ne sont pas encore charger
             return(
                 <ActivityIndicator size="large" color="#ffcc00"/>
             );

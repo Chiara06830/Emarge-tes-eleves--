@@ -169,7 +169,9 @@ router.get('/selectionGroupe', (req,res)=> {
 
 //Selection étudiants : 
 router.get('/selection', (req,res)=>{
-    fetch(`${host}:${portDest}/selection/etudiant`)
+    const {idSeance} = req.query;
+
+    fetch(`${host}:${portDest}/selection/etudiant?id=${idSeance}`)
         .then(res => res.json())
         .then(result => {
             return res.json({
