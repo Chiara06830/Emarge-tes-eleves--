@@ -30,7 +30,7 @@ export default class Row extends React.Component{
         return (
             <TouchableOpacity
                 style={styles.row}
-                onPress={() => this.props.changeId(this.props.id)}
+                onPress={() => this.props.changeIdSeance(this.props.id)}
             >
                 <Text>{nom}</Text>
             </TouchableOpacity>

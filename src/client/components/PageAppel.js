@@ -9,28 +9,23 @@ import { MultipleSelectPicker } from 'react-native-multi-select-picker';
 export default class PageAppel extends Component{
     constructor(props){
         super(props);
+        this.presence = [];
         this.state = {
             data : null,
             dataTable: null,
-            visible :false,
+            visible :false, //pour une popup
             selectedItems: [],
             items : null
         }
     }
 
-    formatDate (input) {
-        var datePart = input.match(/\d+/g),
-        year = datePart[0],
-        month = datePart[1], day = datePart[2];
-
-        return day+'/'+month+'/'+year;
-    }
-
+    //----------------CHARGEMENT DES DONNEES----------------//
     componentDidMount(){
         this.fetchData();
         this.fetchItems();
     }
 
+    //recupère infos du cours
     fetchData = () => {
         fetch(`http://localhost:5600/sceance?id=${this.props.id}`)
             .then(res => res.json())
@@ -42,10 +37,13 @@ export default class PageAppel extends Component{
                 if(err) throw err;
             });
     }
+
+    //récupère liste des élèves
     fetchItems = () =>{
         fetch(`http://localhost:5600/selection`)
             .then(res => res.json())
             .then(res =>{
+                console.log(res);
                 this.setState({items : res.data});
             })
             .catch(err =>{
@@ -54,11 +52,23 @@ export default class PageAppel extends Component{
             })
     }
 
+    //----------------FONCTIONNALITEES----------------//
+    
+    formatDate (input) {
+        var datePart = input.match(/\d+/g),
+        year = datePart[0],
+        month = datePart[1], day = datePart[2];
+
+        return day+'/'+month+'/'+year;
+    }
+
+    //ouverture de la popup d'ajout d'étudiant
     ajouterEtudiants(){
         this.setState({ visible: true });
         this.fetchItems();
     }
 
+    //ajout d'un etudiant a la liste
     ajouterDataTable(){
         var studentAdded = [];
         for(var i =0; i<this.state.selectedItems.length; i++){
@@ -95,12 +105,10 @@ export default class PageAppel extends Component{
         this.setState({visible:false});
     }
 
-
-
+    //envoie des données
     valider(){
-        this.props.changeId(-1);
+        this.props.changeIdSeance(-1);
         this.fetchData();
-        //this.props.changeOnglet('Creation');
     }
 
     render(){
@@ -113,6 +121,15 @@ export default class PageAppel extends Component{
         }
 
         if(this.state.data != null && this.state.dataTable != null){
+            //tri des etudiants par leurs nom de famille
+            this.state.dataTable.sort(function(a, b) {
+                var nameA = a.nomEtudiant.toUpperCase();
+                var nameB = b.nomEtudiant.toUpperCase();
+                if (nameA < nameB) {return -1; }
+                if (nameA > nameB) { return 1;}
+                return 0;  
+            });
+
             return (
                 <View style={styles.container5}>
                     <Text style={styles.title}>UE {this.state.data.nomUE}</Text>
@@ -121,6 +138,7 @@ export default class PageAppel extends Component{
                     <Text><Text style={{fontWeight: "bold"}}>Date :</Text> {this.formatDate(this.state.data.dateSeance.split("T")[0])}</Text>
                     <Text><Text style={{fontWeight: "bold"}}>Enseignant :</Text> {this.state.data.prenomEnseignant} {this.state.data.nomEnseignant}</Text>
                     <SafeAreaView style={styles.container}>
+                    {/* Liste des étudiants */}
                     <ScrollView style={styles.scrollView}>
                         {
                             this.state.dataTable.map((item, index) => (
@@ -138,6 +156,8 @@ export default class PageAppel extends Component{
                     </SafeAreaView>
                     <Button color={styles.buttonColor} title="Ajouter des étudiants" onPress={() => this.ajouterEtudiants()}  />
                     <Button color={styles.buttonColor} title="Valider" onPress={() => this.valider()}/>
+
+                    {/* Popup de gestion des abscence */}
                     <Dialog
                         visible={this.state.visible}
                         onTouchOutside={() => {

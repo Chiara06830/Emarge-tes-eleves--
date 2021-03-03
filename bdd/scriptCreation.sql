@@ -55,8 +55,7 @@ CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`RELATION_UE_ENSEIGNANT` (
   CONSTRAINT `fk_RELATION_UE_ENSEIGNANT_UE`
     FOREIGN KEY (`uneUE`)
     REFERENCES `sauvegardeteseleves`.`UE` (`idUE`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE CASCADE ON DELETE CASCADE)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -86,8 +85,7 @@ CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`RELATION_UE_FILIERE` (
   CONSTRAINT `fk_RELATION_UE_FILIERE_UE`
     FOREIGN KEY (`uneUE`)
     REFERENCES `sauvegardeteseleves`.`UE` (`idUE`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT `fk_RELATION_UE_FILIERE_FILIERE`
     FOREIGN KEY (`uneFiliere`)
     REFERENCES `sauvegardeteseleves`.`FILIERE` (`idFiliere`)

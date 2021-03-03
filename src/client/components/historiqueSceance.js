@@ -8,13 +8,8 @@ export default class PageHistoriqueDesSeances extends Component{
     constructor(props){
         super(props);
         this.state = {
-            idSeance : this.props.idSeance,
             data : null
         }
-    }
-
-    changeId = (id) => {
-        this.setState({idSeance : id});
     }
 
     changeOnglet = (nom) => {
@@ -29,6 +24,7 @@ export default class PageHistoriqueDesSeances extends Component{
         fetch(`http://localhost:5600/historique?id=${this.props.id}`)
             .then(res => res.json())
             .then(res => {
+                //reformater la date de la seance
                 for(let i=0; i<res.length; i++){
                     var dateParts = res[i]["dateSeance"].split("-");
                     res[i]["dateSeance"] = new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0,2));
@@ -46,8 +42,19 @@ export default class PageHistoriqueDesSeances extends Component{
     }
 
     render(){
-        console.log(this.props.idSeance);
-        if(this.state.idSeance<0 && this.state.data != null){
+        if(this.state.data === null) {
+            return(
+                <ActivityIndicator size="large" color="#ffcc00"/>
+            );
+        }else if(this.props.idSeance > 0){
+            return (
+                <Appel 
+                    id={this.props.idSeance}
+                    changeIdSeance={this.props.changeIdSeance}
+                    changeOnglet={this.changeOnglet}
+                />
+            );
+        }else{
             this.state.data.sort((a,b)=>b.dateSeance.getTime()-a.dateSeance.getTime());
             return (
                 <View style={styles.container}>
@@ -67,24 +74,12 @@ export default class PageHistoriqueDesSeances extends Component{
                                     groupe={item.numGroup}
                                     date={item.dateSeance}
                                     creneau={item.creneau}
-                                    changeId={this.changeId}/>
+                                    changeIdSeance={this.props.changeIdSeance}/>
                             ))
                         }
                     </ScrollView>
                     </SafeAreaView>
                 </View>
-            );
-        }else if(this.state.idSeance>0 && this.state.data != null){
-            return (
-                <Appel 
-                    id={this.state.idSeance} 
-                    changeId={this.changeId} 
-                    changeOnglet={this.changeOnglet}
-                />
-            );
-        }else {
-            return(
-                <ActivityIndicator size="large" color="#ffcc00"/>
             );
         }
     }
