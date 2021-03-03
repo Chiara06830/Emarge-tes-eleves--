@@ -10,17 +10,23 @@ export default class Row extends React.Component{
         }
     }
 
-    formatDate (input) {
-        var datePart = input.match(/\d+/g),
-        year = datePart[0],
-        month = datePart[1], day = datePart[2];
-
-        return day+'/'+month+'/'+year;
+    formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [day, month, year].join('/');
     }
 
     render(){
         const nom = "" + this.props.title + "-" + this.props.type + "-" + this.props.filiere + " G" + this.props.groupe + "\n"
-            + this.formatDate(this.props.date.split("T")[0]) + " (" + this.props.creneau + ")";
+            + this.formatDate(this.props.date) + " (" + this.props.creneau + ")";
         return (
             <TouchableOpacity
                 style={styles.row}

@@ -29,6 +29,10 @@ export default class PageHistoriqueDesSeances extends Component{
         fetch(`http://localhost:5600/historique?id=${this.props.id}`)
             .then(res => res.json())
             .then(res => {
+                for(let i=0; i<res.length; i++){
+                    var dateParts = res[i]["dateSeance"].split("-");
+                    res[i]["dateSeance"] = new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0,2));
+                }
                 this.setState({data: res});
             })
             .catch(err =>{
@@ -44,6 +48,7 @@ export default class PageHistoriqueDesSeances extends Component{
     render(){
         console.log(this.props.idSeance);
         if(this.state.idSeance<0 && this.state.data != null){
+            this.state.data.sort((a,b)=>b.dateSeance.getTime()-a.dateSeance.getTime());
             return (
                 <View style={styles.container}>
                     <View style={styles.placementButtonDeconnexion}>
