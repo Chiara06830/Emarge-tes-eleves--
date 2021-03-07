@@ -19,7 +19,9 @@
     "expo-splash-screen": "~0.6.2",
     "expo-status-bar": "~1.0.2",
     "expo-updates": "~0.3.2",
+    "node-cas-authentication": "0.0.15",
     "react": "16.13.1",
+    "react-cas-client": "^1.0.4",
     "react-date-picker": "^8.0.6",
     "react-dom": "16.13.1",
     "react-native": "~0.63.3",
@@ -27,14 +29,14 @@
     "react-native-dropdown-picker": "^3.7.1",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "~1.7.0",
+    "react-native-multi-select-picker": "1.0.11",
     "react-native-popup-dialog": "^0.18.3",
     "react-native-reanimated": "~1.13.0",
     "react-native-screens": "~2.10.1",
     "react-native-simple-radio-button": "^2.7.4",
     "react-native-unimodules": "~0.11.0",
     "react-native-web": "~0.13.12",
-    "react-time-picker": "^4.1.2",
-    "react-native-multi-select-picker": "1.0.11"
+    "react-time-picker": "^4.1.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

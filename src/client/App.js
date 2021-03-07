@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+import PageConnexionCAS from './components/connexionCAS';
 import PageConnexion from './components/connexion';
 import Onglet from './components/tab';
 import MotDePasseOublie from './components/motDePasseOublie';
@@ -32,7 +33,8 @@ class Index extends React.Component {
     }
 
     render() {
-      const page = this.state.etat === 'connexion' ? <PageConnexion changeEtat={this.changeEtat} changeId={this.changeId} /> : 
+      const page = this.state.etat === 'connexionCAS' ? <PageConnexionCAS changeEtat={this.changeEtat} /> : 
+      this.state.etat === 'connexion' ? <PageConnexion changeEtat={this.changeEtat} changeId={this.changeId} /> :
       this.state.etat === 'sceance' ? <Onglet changeEtat={this.changeEtat} id={this.state.id} changeId={this.changeId} changeIdSeance={this.changeIdSeance} idSeance={this.state.idSeance}/> :
       this.state.etat === 'motDePasseOublie' ? <MotDePasseOublie changeEtat={this.changeEtat} changeId={this.changeId}/> :
       this.state.etat === 'changerMotDePasse' ? <ChangerMotDePasse changeEtat={this.changeEtat} id={this.state.id}/> : 
