@@ -3,18 +3,18 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema sauvegardeteseleves
+-- Schema emarget
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `sauvegardeteseleves` DEFAULT CHARACTER SET utf8 ;
-USE `sauvegardeteseleves` ;
+CREATE SCHEMA IF NOT EXISTS `emarget` DEFAULT CHARACTER SET utf8 ;
+USE `emarget` ;
 
 -- -----------------------------------------------------
--- Table `sauvegardeteseleves`.`ENSEIGNANT`
+-- Table `emarget`.`ENSEIGNANT`
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `sauvegardeteseleves`.`ENSEIGNANT` ;
+DROP TABLE IF EXISTS `emarget`.`ENSEIGNANT` ;
 
-CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`ENSEIGNANT` (
+CREATE TABLE IF NOT EXISTS `emarget`.`ENSEIGNANT` (
   `idEnseignant` INT NOT NULL AUTO_INCREMENT,
   `nomEnseignant` VARCHAR(45) NOT NULL,
   `prenomEnseignant` VARCHAR(45) NOT NULL,
@@ -24,11 +24,11 @@ CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`ENSEIGNANT` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `sauvegardeteseleves`.`UE`
+-- Table `emarget`.`UE`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sauvegardeteseleves`.`UE` ;
+DROP TABLE IF EXISTS `emarget`.`UE` ;
 
-CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`UE` (
+CREATE TABLE IF NOT EXISTS `emarget`.`UE` (
   `idUE` INT NOT NULL AUTO_INCREMENT,
   `nomUE` VARCHAR(45) NOT NULL,
   UNIQUE (nomUE),
@@ -36,11 +36,11 @@ CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`UE` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `sauvegardeteseleves`.`RELATION_UE_ENSEIGNANT`
+-- Table `emarget`.`RELATION_UE_ENSEIGNANT`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sauvegardeteseleves`.`RELATION_UE_ENSEIGNANT` ;
+DROP TABLE IF EXISTS `emarget`.`RELATION_UE_ENSEIGNANT` ;
 
-CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`RELATION_UE_ENSEIGNANT` (
+CREATE TABLE IF NOT EXISTS `emarget`.`RELATION_UE_ENSEIGNANT` (
   `idRelationUEEnseignant` INT NOT NULL AUTO_INCREMENT,
   `unEnseignant` INT NULL,
   `uneUE` INT NULL,
@@ -49,33 +49,33 @@ CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`RELATION_UE_ENSEIGNANT` (
   INDEX `fk_RELATION_UE_ENSEIGNANT_UE_idx` (`uneUE` ASC),
   CONSTRAINT `fk_RELATION_UE_ENSEIGNANT_ENSEIGNANT`
     FOREIGN KEY (`unEnseignant`)
-    REFERENCES `sauvegardeteseleves`.`ENSEIGNANT` (`idEnseignant`)
+    REFERENCES `emarget`.`ENSEIGNANT` (`idEnseignant`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_RELATION_UE_ENSEIGNANT_UE`
     FOREIGN KEY (`uneUE`)
-    REFERENCES `sauvegardeteseleves`.`UE` (`idUE`)
+    REFERENCES `emarget`.`UE` (`idUE`)
     ON UPDATE CASCADE ON DELETE CASCADE)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `sauvegardeteseleves`.`FILIERE`
+-- Table `emarget`.`FILIERE`
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `sauvegardeteseleves`.`FILIERE` ;
+DROP TABLE IF EXISTS `emarget`.`FILIERE` ;
 
-CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`FILIERE` (
+CREATE TABLE IF NOT EXISTS `emarget`.`FILIERE` (
   `idFiliere` INT NOT NULL AUTO_INCREMENT,
   `nomFiliere` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idFiliere`))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `sauvegardeteseleves`.`RELATION_UE_FILIERE`
+-- Table `emarget`.`RELATION_UE_FILIERE`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sauvegardeteseleves`.`RELATION_UE_FILIERE` ;
+DROP TABLE IF EXISTS `emarget`.`RELATION_UE_FILIERE` ;
 
-CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`RELATION_UE_FILIERE` (
+CREATE TABLE IF NOT EXISTS `emarget`.`RELATION_UE_FILIERE` (
   `idRelationUEFiliere` INT NOT NULL AUTO_INCREMENT,
   `uneUE` INT NULL,
   `uneFiliere` INT NULL,
@@ -84,22 +84,22 @@ CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`RELATION_UE_FILIERE` (
   INDEX `fk_RELATION_UE_FILIERE_FILIERE_idx` (`uneFiliere` ASC),
   CONSTRAINT `fk_RELATION_UE_FILIERE_UE`
     FOREIGN KEY (`uneUE`)
-    REFERENCES `sauvegardeteseleves`.`UE` (`idUE`)
+    REFERENCES `emarget`.`UE` (`idUE`)
     ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT `fk_RELATION_UE_FILIERE_FILIERE`
     FOREIGN KEY (`uneFiliere`)
-    REFERENCES `sauvegardeteseleves`.`FILIERE` (`idFiliere`)
+    REFERENCES `emarget`.`FILIERE` (`idFiliere`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `sauvegardeteseleves`.`GROUPE`
+-- Table `emarget`.`GROUPE`
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `sauvegardeteseleves`.`GROUPE` ;
+DROP TABLE IF EXISTS `emarget`.`GROUPE` ;
 
-CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`GROUPE` (
+CREATE TABLE IF NOT EXISTS `emarget`.`GROUPE` (
   `idGroupe` INT NOT NULL AUTO_INCREMENT,
   `numGroupe` INT NOT NULL,
   `uneFiliere` INT NULL,
@@ -107,18 +107,18 @@ CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`GROUPE` (
   INDEX `fk_GROUPE_FILiERE_idx` (`uneFiliere` ASC),
   CONSTRAINT `fk_GROUPE_FILiERE`
     FOREIGN KEY (`uneFiliere`)
-    REFERENCES `sauvegardeteseleves`.`FILIERE` (`idFiliere`)
+    REFERENCES `emarget`.`FILIERE` (`idFiliere`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `sauvegardeteseleves`.`ETUDIANT`
+-- Table `emarget`.`ETUDIANT`
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `sauvegardeteseleves`.`ETUDIANT` ;
+DROP TABLE IF EXISTS `emarget`.`ETUDIANT` ;
 
-CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`ETUDIANT` (
+CREATE TABLE IF NOT EXISTS `emarget`.`ETUDIANT` (
   `idEtudiant` INT NOT NULL AUTO_INCREMENT,
   `nomEtudiant` VARCHAR(45) NOT NULL,
   `prenomEtudiant` VARCHAR(45) NOT NULL,
@@ -129,18 +129,18 @@ CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`ETUDIANT` (
   INDEX `fk_ETUDIANT_GROUPE_idx` (`unGroupe` ASC),
   CONSTRAINT `fk_ETUDIANT_GROUPE`
     FOREIGN KEY (`unGroupe`)
-    REFERENCES `sauvegardeteseleves`.`GROUPE` (`idGroupe`)
+    REFERENCES `emarget`.`GROUPE` (`idGroupe`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `sauvegardeteseleves`.`SEANCE`
+-- Table `emarget`.`SEANCE`
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `sauvegardeteseleves`.`SEANCE` ;
+DROP TABLE IF EXISTS `emarget`.`SEANCE` ;
 
-CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`SEANCE` (
+CREATE TABLE IF NOT EXISTS `emarget`.`SEANCE` (
   `idSeance` INT NOT NULL AUTO_INCREMENT,
   `dateSeance` DATE NOT NULL,
   `creneau` VARCHAR(45) NOT NULL,
@@ -154,40 +154,40 @@ CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`SEANCE` (
   INDEX `fk_SEANCE_GROUPE_idx` (`unGroupe` ASC),
   CONSTRAINT `fk_SEANCE_ENSEIGNANT`
     FOREIGN KEY (`unEnseignant`)
-    REFERENCES `sauvegardeteseleves`.`ENSEIGNANT` (`idEnseignant`)
+    REFERENCES `emarget`.`ENSEIGNANT` (`idEnseignant`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_SEANCE_UE`
     FOREIGN KEY (`uneUE`)
-    REFERENCES `sauvegardeteseleves`.`UE` (`idUE`)
+    REFERENCES `emarget`.`UE` (`idUE`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_SEANCE_GROUPE`
     FOREIGN KEY (`unGroupe`)
-    REFERENCES `sauvegardeteseleves`.`GROUPE` (`idGroupe`)
+    REFERENCES `emarget`.`GROUPE` (`idGroupe`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `sauvegardeteseleves`.`TYPEPARTICIPATION`
+-- Table `emarget`.`TYPEPARTICIPATION`
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `sauvegardeteseleves`.`TYPEPARTICIPATION` ;
+DROP TABLE IF EXISTS `emarget`.`TYPEPARTICIPATION` ;
 
-CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`TYPEPARTICIPATION` (
+CREATE TABLE IF NOT EXISTS `emarget`.`TYPEPARTICIPATION` (
   `idType` INT NOT NULL AUTO_INCREMENT,
   `nomType` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idType`))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `sauvegardeteseleves`.`PARTICIPATION`
+-- Table `emarget`.`PARTICIPATION`
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `sauvegardeteseleves`.`PARTICIPATION` ;
+DROP TABLE IF EXISTS `emarget`.`PARTICIPATION` ;
 
-CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`PARTICIPATION` (
+CREATE TABLE IF NOT EXISTS `emarget`.`PARTICIPATION` (
   `idParticipation` INT NOT NULL AUTO_INCREMENT,
   `commentaire` VARCHAR(45) NULL,
   `unTypeParticipation` INT NULL,
@@ -199,17 +199,17 @@ CREATE TABLE IF NOT EXISTS `sauvegardeteseleves`.`PARTICIPATION` (
   INDEX `fk_PARTICIPATION_SEANCE_idx` (`uneSeance` ASC),
   CONSTRAINT `fk_PARTICIPATION_TYPEPARTICIPATION`
     FOREIGN KEY (`unTypeParticipation`)
-    REFERENCES `sauvegardeteseleves`.`TYPEPARTICIPATION` (`idType`)
+    REFERENCES `emarget`.`TYPEPARTICIPATION` (`idType`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_PARTICIPATION_ETUDIANT`
     FOREIGN KEY (`unEtudiant`)
-    REFERENCES `sauvegardeteseleves`.`ETUDIANT` (`idEtudiant`)
+    REFERENCES `emarget`.`ETUDIANT` (`idEtudiant`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_PARTICIPATION_SEANCE`
     FOREIGN KEY (`uneSeance`)
-    REFERENCES `sauvegardeteseleves`.`SEANCE` (`idSeance`)
+    REFERENCES `emarget`.`SEANCE` (`idSeance`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
