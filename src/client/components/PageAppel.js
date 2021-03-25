@@ -111,6 +111,7 @@ export default class PageAppel extends Component{
     valider(){
         this.props.changeIdSeance(-1);
         this.fetchData();
+        this.props.charger();
     }
 
     render(){

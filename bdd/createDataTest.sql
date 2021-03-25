@@ -1,4 +1,4 @@
-USE `emarget` ;
+USE `sauvegardeteseleves` ;
 
 DELETE FROM RELATION_UE_ENSEIGNANT;
 DELETE FROM RELATION_UE_FILIERE;

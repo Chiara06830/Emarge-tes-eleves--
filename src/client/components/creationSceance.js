@@ -11,7 +11,7 @@ class PageCreationUneSeance extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            nomUE: '1',
+            nomUE : null,
             typeDeCours: 'TP',
             groupe: '1',
             date: new Date(),
@@ -28,6 +28,7 @@ class PageCreationUneSeance extends Component {
         const creneau = this.state.debut + " - " + this.state.fin;
         const date2 = Date.parse(this.state.date);
         const formatDate = format(date2, "yyyy-MM-dd"); 
+        console.log(this.state.nomUE);
         fetch(`http://localhost:5600/creationSeance?nomUE=${this.state.nomUE}&typeDeCours=${this.state.typeDeCours}&groupe=${this.state.groupe}&date=${formatDate}&creneau=${creneau}&id=${this.props.id}`)
             .then(res => res.json())
             .then(res => {
@@ -69,6 +70,8 @@ class PageCreationUneSeance extends Component {
                     listeNomUE[i] = "" + listeUE[i].nomUE;
                     i++;
                 }
+
+                this.setState({nomUE : listeIdUE[0]});
 
                 i = 0;
                 let listeUEPicker2 = listeNomUE.map( (s, i) => {

@@ -20,7 +20,7 @@ export default class PageHistoriqueDesSeances extends Component{
         this.fetchData();
     }
 
-    fetchData(){
+    fetchData = () => {
         fetch(`http://localhost:5600/historique?id=${this.props.id}`)
             .then(res => res.json())
             .then(res => {
@@ -52,6 +52,7 @@ export default class PageHistoriqueDesSeances extends Component{
                     id={this.props.idSeance}
                     changeIdSeance={this.props.changeIdSeance}
                     changeOnglet={this.changeOnglet}
+                    charger = {this.fetchData}
                 />
             );
         }else{ //sinon c'est l'historique
